@@ -32,11 +32,11 @@ pyz = PYZ(a.pure)
 exe = EXE(
     pyz, a.scripts, [],
     exclude_binaries=True,
-    name="iphone-backup",
+    name="iphonephotosync",
     console=False,
     disable_windowed_traceback=False,
 )
-coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name="iphone-backup")
+coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name="iphonephotosync")
 if sys.platform == "darwin":
-    app = BUNDLE(coll, name="Respaldo de iPhone.app", bundle_identifier="org.iphonebackup.app",
+    app = BUNDLE(coll, name="iPhonePhotoSync.app", bundle_identifier="io.github.joscarper1.iphonephotosync",
                  info_plist={"NSHighResolutionCapable": True, "CFBundleShortVersionString": "0.1.0"})

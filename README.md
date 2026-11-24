@@ -22,7 +22,16 @@ teléfono**, con verificación SHA-256 y de forma **incremental**. Todo es local
 
 ## Instalación
 
-Descarga el paquete de tu sistema en la sección **Releases** de este repositorio y descomprímelo.
+Descarga el paquete de tu sistema y descomprímelo. Enlaces directos a **la última versión**:
+
+| Sistema | Descarga |
+|---|---|
+| Windows 10/11 (x64) | [iphonephotosync-windows-x64.zip](https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-windows-x64.zip) |
+| macOS (Apple Silicon) | [iphonephotosync-macos-arm64.zip](https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-macos-arm64.zip) |
+| Linux (x64) | [iphonephotosync-linux-x64.tar.gz](https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-linux-x64.tar.gz) |
+
+**Todas las versiones** (la última y las anteriores, con sus notas): <https://github.com/joscarper1/iPhonePhotoSync/releases>.
+Cada versión incluye `SHA256SUMS.txt` para comprobar que el archivo no se alteró.
 
 | Sistema | Requisitos |
 |---|---|

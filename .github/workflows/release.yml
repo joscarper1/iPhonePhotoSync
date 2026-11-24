@@ -50,17 +50,17 @@ jobs:
       - name: Comprimir (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
-        run: Compress-Archive -Path dist/iphone-backup -DestinationPath "iphone-backup-${{ github.ref_name }}-${{ matrix.name }}.zip"
+        run: Compress-Archive -Path dist/iphonephotosync -DestinationPath "iphonephotosync-${{ matrix.name }}.zip"
       - name: Comprimir (Linux)
         if: runner.os == 'Linux'
-        run: tar -czf "iphone-backup-${{ github.ref_name }}-${{ matrix.name }}.tar.gz" -C dist iphone-backup
+        run: tar -czf "iphonephotosync-${{ matrix.name }}.tar.gz" -C dist iphonephotosync
       - name: Comprimir (macOS)
         if: runner.os == 'macOS'
-        run: ditto -c -k --sequesterRsrc --keepParent "dist/Respaldo de iPhone.app" "iphone-backup-${{ github.ref_name }}-${{ matrix.name }}.zip"
+        run: ditto -c -k --sequesterRsrc --keepParent "dist/iPhonePhotoSync.app" "iphonephotosync-${{ matrix.name }}.zip"
       - uses: actions/upload-artifact@v4
         with:
-          name: paquete-${{ matrix.name }}
-          path: iphone-backup-*
+          name: iphonephotosync-${{ matrix.name }}
+          path: iphonephotosync-*
           if-no-files-found: error
 
   publish:
@@ -74,7 +74,7 @@ jobs:
           path: paquetes
           merge-multiple: true
       - name: Sumas SHA-256
-        run: cd paquetes && sha256sum iphone-backup-* > SHA256SUMS.txt
+        run: cd paquetes && sha256sum iphonephotosync-* > SHA256SUMS.txt
       - name: Crear la Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
