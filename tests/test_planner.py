@@ -1,14 +1,14 @@
 import pytest
 
 from conftest import make_file
-from iphone_backup.device.simulated import SimulatedDeviceSource
-from iphone_backup.domain.models import DateSource
-from iphone_backup.domain.place import Place, PlaceLevel
-from iphone_backup.metadata.policy import MediaMetadata
-from iphone_backup.organizer.planner import (
+from iphonephotosync.device.simulated import SimulatedDeviceSource
+from iphonephotosync.domain.models import DateSource
+from iphonephotosync.domain.place import Place, PlaceLevel
+from iphonephotosync.metadata.policy import MediaMetadata
+from iphonephotosync.organizer.planner import (
     OrganizerSettings, PlaceStatus, build_preview, group_leaders, plan_folders, planned_name_collisions,
 )
-from iphone_backup.scanner import scan
+from iphonephotosync.scanner import scan
 
 
 def meta(dt=None, lat=None, lon=None, cid=None):

@@ -4,9 +4,9 @@ import sys
 
 import pytest
 
-from iphone_backup.metadata.exiftool_service import default_exiftool_path
-from iphone_backup.transfer import platform_fs
-from iphone_backup.transfer.fsops import RealFs
+from iphonephotosync.metadata.exiftool_service import default_exiftool_path
+from iphonephotosync.transfer import platform_fs
+from iphonephotosync.transfer.fsops import RealFs
 
 
 def test_filesystem_names_are_normalized():
@@ -46,9 +46,9 @@ def test_device_hint_mentions_the_right_thing_per_os(monkeypatch):
 
 def test_exiftool_path_prefers_env_then_bundle_then_path(monkeypatch, tmp_path):
     fake = tmp_path / "mi_exiftool"
-    monkeypatch.setenv("IPHONE_BACKUP_EXIFTOOL", str(fake))
+    monkeypatch.setenv("IPHONEPHOTOSYNC_EXIFTOOL", str(fake))
     assert default_exiftool_path() == fake
-    monkeypatch.delenv("IPHONE_BACKUP_EXIFTOOL")
+    monkeypatch.delenv("IPHONEPHOTOSYNC_EXIFTOOL")
     name = "exiftool.exe" if os.name == "nt" else "exiftool"
     bundle = tmp_path / "bundle/tools/exiftool"
     bundle.mkdir(parents=True)
@@ -72,7 +72,7 @@ def test_rename_never_overwrites_on_any_os(tmp_path):
 
 @pytest.mark.skipif(os.name == "nt", reason="renameat2/renamex_np solo existen en Linux/macOS")
 def test_posix_atomic_noreplace_helper_reports_exists_or_unsupported(tmp_path):
-    from iphone_backup.transfer.fsops import _posix_rename_noreplace
+    from iphonephotosync.transfer.fsops import _posix_rename_noreplace
     a, b = tmp_path / "a", tmp_path / "b"
     a.write_bytes(b"1")
     b.write_bytes(b"2")

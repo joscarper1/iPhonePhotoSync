@@ -1,10 +1,10 @@
 import json
 
 from conftest import make_file
-from iphone_backup.cli.__main__ import main
-from iphone_backup.device.simulated import SimulatedDeviceSource
-from iphone_backup.domain.filetypes import FileKind
-from iphone_backup.scanner import scan
+from iphonephotosync.cli.__main__ import main
+from iphonephotosync.device.simulated import SimulatedDeviceSource
+from iphonephotosync.domain.filetypes import FileKind
+from iphonephotosync.scanner import scan
 
 
 def test_scan_counts_and_candidates(fake_iphone):

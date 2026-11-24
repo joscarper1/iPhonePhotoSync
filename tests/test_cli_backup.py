@@ -3,9 +3,9 @@ import json
 import pytest
 
 from media_fixtures import make_jpeg, make_mov, make_png, needs_exiftool
-from iphone_backup.app.planning import PlanResult, subset_plan
-from iphone_backup.cli.__main__ import main
-from iphone_backup.organizer.planner import FolderPlan, PlaceStatus
+from iphonephotosync.app.planning import PlanResult, subset_plan
+from iphonephotosync.cli.__main__ import main
+from iphonephotosync.organizer.planner import FolderPlan, PlaceStatus
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 
@@ -43,7 +43,7 @@ def test_backup_with_yes_then_incremental(iphone, tmp_path, capsys):
 
 def test_insufficient_space_exit_code(iphone, tmp_path, monkeypatch, capsys):
     from collections import namedtuple
-    from iphone_backup.transfer import space
+    from iphonephotosync.transfer import space
     U = namedtuple("U", "total used free")
     monkeypatch.setattr(space.shutil, "disk_usage", lambda p: U(10**12, 0, 1000))
     assert main(["backup", "--simulate", str(iphone), "--dest", str(tmp_path / "hdd"), "--yes", "--no-gps"]) == 3

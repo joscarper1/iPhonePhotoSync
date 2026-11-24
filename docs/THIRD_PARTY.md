@@ -4,11 +4,11 @@
 |---|---|---|---|
 | pymobiledevice3 11.63.1 | Acceso AFC al iPhone | GPL-3.0-or-later | Si se distribuye el ejecutable, el conjunto debe ser GPL |
 | ExifTool 13.64 (Phil Harvey) | Lectura de metadatos | Artistic License / GPL | `tools/exiftool`, origen y SHA-256 en `tools/exiftool/SOURCE.txt` |
-| GeoNames (cities15000, countryInfo, admin1CodesASCII, alternateNamesV2 [es]) | Geocodificación inversa **offline** (`src/iphone_backup/data/geonames.sqlite`) | CC-BY 4.0 | **Atribución obligatoria:** datos de GeoNames, https://www.geonames.org |
+| GeoNames (cities15000, countryInfo, admin1CodesASCII, alternateNamesV2 [es]) | Geocodificación inversa **offline** (`src/iphonephotosync/data/geonames.sqlite`) | CC-BY 4.0 | **Atribución obligatoria:** datos de GeoNames, https://www.geonames.org |
 | Pillow | Solo pruebas (JPEG sintético) | HPND | Dependencia de desarrollo |
 | PySide6 | Interfaz (Etapa 7) | LGPL-3.0 | Aún no incorporado |
 
-La base `src/iphone_backup/data/geonames.sqlite` se genera con `tools/build_geonames_db.py` a partir de los volcados descargados
+La base `src/iphonephotosync/data/geonames.sqlite` se genera con `tools/build_geonames_db.py` a partir de los volcados descargados
 (ejecutar con `python -I`, los datos descargados no son de confianza). Nada se envía a Internet en tiempo de ejecución.
 
 ## Miniaturas (galería de lo pendiente)

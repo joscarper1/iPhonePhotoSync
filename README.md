@@ -1,4 +1,4 @@
-# Respaldo de iPhone
+# iPhonePhotoSync
 
 Copia **las fotos y los vídeos originales** de tu iPhone a tu propio disco por USB, **sin modificar nada en el
 teléfono**, con verificación SHA-256 y de forma **incremental**. Todo es local: no se sube nada a ningún servicio.
@@ -54,18 +54,18 @@ Desde el código fuente (Python 3.12+):
 ```bash
 python -m pip install -e ".[dev]"
 python tools/fetch_exiftool.py        # descarga ExifTool a tools/exiftool
-iphone-backup-ui                      # interfaz
-iphone-backup --help                  # línea de comandos (scan, preview, backup, verify, status, deletion-report)
+iphonephotosync-ui                      # interfaz
+iphonephotosync --help                  # línea de comandos (scan, preview, backup, verify, status, deletion-report)
 ```
 
-Modo de pruebas sin iPhone: `iphone-backup-ui --simulate CARPETA` (una carpeta con subcarpeta `DCIM/`).
+Modo de pruebas sin iPhone: `iphonephotosync-ui --simulate CARPETA` (una carpeta con subcarpeta `DCIM/`).
 
 ## Compilar los paquetes
 
 ```bash
 python -m pip install -e ".[dev]"
 python tools/fetch_exiftool.py
-python -m PyInstaller --noconfirm --clean packaging/iphone_backup.spec
+python -m PyInstaller --noconfirm --clean packaging/iphonephotosync.spec
 ```
 
 La publicación de versiones es automática: al subir una etiqueta `vX.Y.Z`, GitHub Actions compila para Windows, Linux

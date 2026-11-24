@@ -2,9 +2,9 @@ import sqlite3
 
 import pytest
 
-from iphone_backup.domain.place import PlaceLevel
-from iphone_backup.geolocation.builder import build_db, pick_spanish_names
-from iphone_backup.geolocation.offline import OfflineGeocoder, haversine_km
+from iphonephotosync.domain.place import PlaceLevel
+from iphonephotosync.geolocation.builder import build_db, pick_spanish_names
+from iphonephotosync.geolocation.offline import OfflineGeocoder, haversine_km
 
 
 def city(gid, name, lat, lon, cc, admin1, pop=100000, fcode="PPL"):

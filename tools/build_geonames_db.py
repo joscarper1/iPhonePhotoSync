@@ -1,7 +1,7 @@
-"""Construye src/iphone_backup/data/geonames.sqlite desde los volcados de GeoNames descargados en una carpeta.
+"""Construye src/iphonephotosync/data/geonames.sqlite desde los volcados de GeoNames descargados en una carpeta.
 
 Uso (los datos descargados se tratan como NO confiables: se ejecuta aislado con -I):
-    python -I tools\\build_geonames_db.py --src <carpeta_con_descargas> --out src\\iphone_backup\\data\\geonames.sqlite
+    python -I tools\\build_geonames_db.py --src <carpeta_con_descargas> --out src\\iphonephotosync\\data\\geonames.sqlite
 Archivos esperados en --src: cities15000.zip, countryInfo.txt, admin1CodesASCII.txt, alternateNamesV2.zip (opcional)
 """
 import argparse
@@ -10,7 +10,7 @@ import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))   # código propio y de confianza
-from iphone_backup.geolocation.builder import build_db  # noqa: E402
+from iphonephotosync.geolocation.builder import build_db  # noqa: E402
 
 
 def lines_from_zip(zip_path: Path, member: str):

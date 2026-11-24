@@ -8,12 +8,12 @@ import pytest
 
 from media_fixtures import needs_exiftool
 from test_engine import Env, NoHashSource, sha
-from iphone_backup.cli.__main__ import main
-from iphone_backup.database.manifest import Manifest
-from iphone_backup.library.external_index import ExternalIndex, analyze_existing
-from iphone_backup.metadata.exiftool_service import ExifToolService
-from iphone_backup.transfer.destination import Destination
-from iphone_backup.transfer.engine import SessionOutcome
+from iphonephotosync.cli.__main__ import main
+from iphonephotosync.database.manifest import Manifest
+from iphonephotosync.library.external_index import ExternalIndex, analyze_existing
+from iphonephotosync.metadata.exiftool_service import ExifToolService
+from iphonephotosync.transfer.destination import Destination
+from iphonephotosync.transfer.engine import SessionOutcome
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 IMG1 = "DCIM/100APPLE/IMG_0001.JPG"

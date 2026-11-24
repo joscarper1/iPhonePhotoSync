@@ -5,13 +5,13 @@ import struct
 import pytest
 
 from media_fixtures import make_jpeg, make_mov, make_png, needs_exiftool
-from iphone_backup.device.simulated import SimulatedDeviceSource
-from iphone_backup.domain.filetypes import FileKind
-from iphone_backup.domain.models import DateSource
-from iphone_backup.metadata.device_probe import make_tmp_dir, probe_tags
-from iphone_backup.metadata.exiftool_service import ExifToolError, ExifToolService
-from iphone_backup.metadata.policy import interpret
-from iphone_backup.metadata.quicktime_probe import extract_ftyp_moov
+from iphonephotosync.device.simulated import SimulatedDeviceSource
+from iphonephotosync.domain.filetypes import FileKind
+from iphonephotosync.domain.models import DateSource
+from iphonephotosync.metadata.device_probe import make_tmp_dir, probe_tags
+from iphonephotosync.metadata.exiftool_service import ExifToolError, ExifToolService
+from iphonephotosync.metadata.policy import interpret
+from iphonephotosync.metadata.quicktime_probe import extract_ftyp_moov
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 CID = "ABCDEF01-2345-6789-ABCD-EF0123456789"

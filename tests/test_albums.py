@@ -4,10 +4,10 @@ import sqlite3
 import pytest
 
 from media_fixtures import make_jpeg, make_mov, needs_exiftool
-from iphone_backup.app.albums import AlbumIndex, AlbumsUnavailable, load_albums, read_albums
-from iphone_backup.app.workflow import UserSettings, Workflow
-from iphone_backup.database.manifest import Manifest
-from iphone_backup.device.simulated import SimulatedDeviceSource
+from iphonephotosync.app.albums import AlbumIndex, AlbumsUnavailable, load_albums, read_albums
+from iphonephotosync.app.workflow import UserSettings, Workflow
+from iphonephotosync.database.manifest import Manifest
+from iphonephotosync.device.simulated import SimulatedDeviceSource
 
 
 def make_photos_db(path, assets, albums, memberships, favorites=(), join="Z_34", trashed_assets=(), kind=2):
@@ -88,7 +88,7 @@ def test_json_roundtrip_and_load_removes_the_private_copy(tmp_path):
 class TestFlow:
     @pytest.fixture
     def env(self, tmp_path, monkeypatch):
-        monkeypatch.setenv("IPHONE_BACKUP_HOME", str(tmp_path / "cfg"))
+        monkeypatch.setenv("IPHONEPHOTOSYNC_HOME", str(tmp_path / "cfg"))
         root = tmp_path / "iphone"
         d = root / "DCIM/100APPLE"
         make_jpeg(d / "IMG_0001.JPG", {"ExifIFD:DateTimeOriginal": "2026:02:10 12:00:00"})   # en 2 álbumes

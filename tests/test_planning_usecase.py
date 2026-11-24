@@ -4,12 +4,12 @@ import json
 import pytest
 
 from media_fixtures import make_jpeg, make_mov, make_png, needs_exiftool
-from iphone_backup.app.planning import build_plan
-from iphone_backup.cli.__main__ import main
-from iphone_backup.device.simulated import SimulatedDeviceSource
-from iphone_backup.domain.place import Place, PlaceLevel
-from iphone_backup.metadata.exiftool_service import ExifToolService
-from iphone_backup.organizer.planner import OrganizerSettings
+from iphonephotosync.app.planning import build_plan
+from iphonephotosync.cli.__main__ import main
+from iphonephotosync.device.simulated import SimulatedDeviceSource
+from iphonephotosync.domain.place import Place, PlaceLevel
+from iphonephotosync.metadata.exiftool_service import ExifToolService
+from iphonephotosync.organizer.planner import OrganizerSettings
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 CID = "ABCDEF01-2345-6789-ABCD-EF0123456789"
@@ -67,7 +67,7 @@ def test_tag_cache_avoids_reopening_unchanged_files_and_same_plan(iphone):
 
 
 def test_device_loss_during_metadata_aborts_instead_of_building_a_wrong_plan(iphone):
-    from iphone_backup.ports.device import DeviceDisconnected
+    from iphonephotosync.ports.device import DeviceDisconnected
     src = SimulatedDeviceSource(iphone)
     src.faults.disconnect_after_bytes = 100
     with ExifToolService() as et, pytest.raises(DeviceDisconnected):
@@ -85,7 +85,7 @@ def test_unreadable_metadata_is_reported_but_file_is_still_planned_for_backup(ip
 
 
 def test_cli_preview_simulated(iphone, tmp_path, capsys, monkeypatch):
-    monkeypatch.setattr("iphone_backup.geolocation.offline.default_db_path", lambda: tmp_path / "ausente.sqlite")
+    monkeypatch.setattr("iphonephotosync.geolocation.offline.default_db_path", lambda: tmp_path / "ausente.sqlite")
     out = tmp_path / "p.json"
     assert main(["preview", "--simulate", str(iphone), "--json", str(out)]) == 0
     text = capsys.readouterr().out

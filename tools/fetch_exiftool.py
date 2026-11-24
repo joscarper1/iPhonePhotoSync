@@ -24,7 +24,7 @@ DEST = Path(__file__).resolve().parent / "exiftool"
 
 
 def get(url: str) -> bytes:
-    req = urllib.request.Request(url, headers={"User-Agent": "iphone-backup-build"})
+    req = urllib.request.Request(url, headers={"User-Agent": "iphonephotosync-build"})
     with urllib.request.urlopen(req, timeout=120) as r:
         return r.read()
 

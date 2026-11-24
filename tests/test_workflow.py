@@ -2,9 +2,9 @@
 import pytest
 
 from media_fixtures import make_jpeg, make_mov, make_png, needs_exiftool
-from iphone_backup.app.workflow import ScanInvalid, UserSettings, Workflow
-from iphone_backup.device.simulated import SimulatedDeviceSource
-from iphone_backup.ui.progress_model import ProgressModel, fmt_eta
+from iphonephotosync.app.workflow import ScanInvalid, UserSettings, Workflow
+from iphonephotosync.device.simulated import SimulatedDeviceSource
+from iphonephotosync.ui.progress_model import ProgressModel, fmt_eta
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 GPS = {"GPS:GPSLatitude": "41.3851", "GPS:GPSLatitudeRef": "N", "GPS:GPSLongitude": "2.1734", "GPS:GPSLongitudeRef": "E"}
@@ -22,14 +22,27 @@ def phone(tmp_path):
 
 @pytest.fixture
 def wf(phone, tmp_path, monkeypatch):
-    monkeypatch.setenv("IPHONE_BACKUP_HOME", str(tmp_path / "cfg"))
+    monkeypatch.setenv("IPHONEPHOTOSYNC_HOME", str(tmp_path / "cfg"))
     s = UserSettings(dest=str(tmp_path / "hdd"), use_gps=False, workers=2)
     (tmp_path / "hdd").mkdir()
     return Workflow(s, simulate=phone)
 
 
+def test_old_settings_folder_is_still_read_after_the_project_rename(tmp_path, monkeypatch):
+    from iphonephotosync.app.workflow import settings_path
+    monkeypatch.delenv("IPHONEPHOTOSYNC_HOME", raising=False)
+    monkeypatch.setattr("pathlib.Path.home", lambda: tmp_path)
+    assert settings_path() == tmp_path / ".iphonephotosync" / "settings.json"              # sin configuración previa
+    (tmp_path / ".iphone_backup").mkdir()
+    (tmp_path / ".iphone_backup/settings.json").write_text('{"dest": "E:/x"}', encoding="utf-8")
+    assert settings_path() == tmp_path / ".iphone_backup" / "settings.json"                # se respeta la guardada
+    (tmp_path / ".iphonephotosync").mkdir()
+    (tmp_path / ".iphonephotosync/settings.json").write_text("{}", encoding="utf-8")
+    assert settings_path() == tmp_path / ".iphonephotosync" / "settings.json"              # la nueva tiene prioridad
+
+
 def test_destination_inside_the_library_is_moved_to_its_parent(tmp_path):
-    from iphone_backup.app.workflow import normalize_dest
+    from iphonephotosync.app.workflow import normalize_dest
     lib = tmp_path / "Fotos y Videos/iPhone_Photos"
     (lib / "_Manifest").mkdir(parents=True)
     (lib / "_Manifest/backup_id.json").write_text("{}", encoding="utf-8")
@@ -72,7 +85,7 @@ def test_scan_reports_every_phase_in_order_each_with_its_own_progress(wf, phone,
 
 
 def _count_walks(monkeypatch):
-    from iphone_backup.library.external_index import ExternalIndex
+    from iphonephotosync.library.external_index import ExternalIndex
     calls = []
     real = ExternalIndex.walk
     monkeypatch.setattr(ExternalIndex, "walk", lambda self: (calls.append(1), real(self))[1])
@@ -104,8 +117,8 @@ def test_full_scan_saves_a_per_device_snapshot_and_quick_scan_reuses_it(wf, phon
 
 
 def test_snapshot_is_per_device_and_per_destination_and_survives_corruption(wf, tmp_path):
-    from iphone_backup.app.snapshots import SnapshotStore
-    from iphone_backup.library.external_index import ExtFile
+    from iphonephotosync.app.snapshots import SnapshotStore
+    from iphonephotosync.library.external_index import ExtFile
     store = SnapshotStore(tmp_path / "m")
     store.save("UDID-A", "iPhone15", str(tmp_path / "hdd"), 10, [ExtFile("a/x.jpg", 5, 7)])
     store.save("UDID-B", "iPhone12", str(tmp_path / "hdd"), 20, [])
@@ -147,7 +160,7 @@ def test_selection_copies_only_the_chosen_groups_and_leaves_the_rest_pending(wf,
 
 
 def test_live_photo_is_one_item_with_its_companions(tmp_path, monkeypatch):
-    monkeypatch.setenv("IPHONE_BACKUP_HOME", str(tmp_path / "cfg"))
+    monkeypatch.setenv("IPHONEPHOTOSYNC_HOME", str(tmp_path / "cfg"))
     d = tmp_path / "iphone/DCIM/100APPLE"
     cid = "ABCDEF01-2345-6789-ABCD-EF0123456789"
     make_jpeg(d / "IMG_0001.JPG", {"ExifIFD:DateTimeOriginal": "2024:03:10 12:00:00", "Apple:ContentIdentifier": cid})
@@ -230,7 +243,7 @@ def test_type_filter_excludes_videos(wf):
 
 
 def test_changing_settings_semantics_and_persistence(tmp_path, monkeypatch):
-    monkeypatch.setenv("IPHONE_BACKUP_HOME", str(tmp_path / "cfg"))
+    monkeypatch.setenv("IPHONEPHOTOSYNC_HOME", str(tmp_path / "cfg"))
     assert UserSettings.load() == UserSettings()                                # valores seguros por defecto
     s = UserSettings(dest="D:/x", use_gps=False, max_detail="COUNTRY", include_videos=False)
     s.save()
@@ -240,7 +253,7 @@ def test_changing_settings_semantics_and_persistence(tmp_path, monkeypatch):
 
 
 def test_device_not_found_and_lost_during_scan_give_friendly_messages(tmp_path):
-    from iphone_backup.ports.device import DeviceNotFound
+    from iphonephotosync.ports.device import DeviceNotFound
     def boom():
         raise DeviceNotFound("x")
     st = Workflow(UserSettings(), source_factory=boom).connect()

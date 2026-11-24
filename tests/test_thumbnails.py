@@ -8,9 +8,9 @@ av = pytest.importorskip("av")
 np = pytest.importorskip("numpy")
 from PIL import Image
 
-from iphone_backup.app.thumbnails import SIZE, ThumbnailService
-from iphone_backup.device.simulated import FaultPlan, SimulatedDeviceSource
-from iphone_backup.ports.device import DeviceDisconnected, DeviceReadError, thumbnail_dir_for
+from iphonephotosync.app.thumbnails import SIZE, ThumbnailService
+from iphonephotosync.device.simulated import FaultPlan, SimulatedDeviceSource
+from iphonephotosync.ports.device import DeviceDisconnected, DeviceReadError, thumbnail_dir_for
 
 
 def jpeg_bytes(w, h, color=(200, 30, 30), size=None):

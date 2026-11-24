@@ -10,9 +10,9 @@ import pytest
 from pymobiledevice3 import exceptions as E
 from pymobiledevice3.services.afc import AfcError
 
-from iphone_backup.device.afc_source import AfcDeviceSource, dt_to_ns, map_exception
-from iphone_backup.domain.models import DeviceInfo
-from iphone_backup.ports.device import (
+from iphonephotosync.device.afc_source import AfcDeviceSource, dt_to_ns, map_exception
+from iphonephotosync.domain.models import DeviceInfo
+from iphonephotosync.ports.device import (
     FORBIDDEN_DEVICE_METHODS, DeviceDisconnected, DeviceError, DeviceLocked, DeviceNotFound,
     DeviceReadError, TrustRequired, iter_chunks,
 )

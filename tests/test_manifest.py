@@ -1,7 +1,7 @@
 import pytest
 
-from iphone_backup.database.manifest import Manifest, ManifestError
-from iphone_backup.domain.models import (
+from iphonephotosync.database.manifest import Manifest, ManifestError
+from iphonephotosync.domain.models import (
     DeviceFile, InvalidTransition, ItemStatus, SessionStatus, VerifyStatus,
 )
 

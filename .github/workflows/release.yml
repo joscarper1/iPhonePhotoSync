@@ -46,7 +46,27 @@ jobs:
           QT_QPA_PLATFORM: offscreen
         run: python -m pytest -q -n auto
       - name: Empaquetar
-        run: python -m PyInstaller --noconfirm --clean packaging/iphone_backup.spec
+        run: python -m PyInstaller --noconfirm --clean packaging/iphonephotosync.spec
+      - name: Comprobar el contenido del paquete (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Get-ChildItem dist/iphonephotosync | Select-Object -First 8 Name
+          if (-not (Test-Path dist/iphonephotosync/iphonephotosync.exe)) { throw "Falta iphonephotosync.exe" }
+          if (-not (Test-Path dist/iphonephotosync/_internal/tools/exiftool/exiftool.exe)) { throw "Falta ExifTool" }
+          if (-not (Test-Path dist/iphonephotosync/_internal/iphonephotosync/data/geonames.sqlite)) { throw "Falta la base GeoNames" }
+      - name: Comprobar el contenido del paquete (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          ls dist/iphonephotosync | head -8
+          test -x dist/iphonephotosync/iphonephotosync
+          test -f dist/iphonephotosync/_internal/tools/exiftool/exiftool
+          test -f dist/iphonephotosync/_internal/iphonephotosync/data/geonames.sqlite
+      - name: Comprobar el contenido del paquete (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          ls "dist/iPhonePhotoSync.app/Contents/MacOS" | head -8
+          test -x "dist/iPhonePhotoSync.app/Contents/MacOS/iphonephotosync"
       - name: Comprimir (Windows)
         if: runner.os == 'Windows'
         shell: pwsh

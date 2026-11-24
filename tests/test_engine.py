@@ -9,16 +9,16 @@ from pathlib import Path
 import pytest
 
 from media_fixtures import make_jpeg, make_mov, make_png, needs_exiftool
-from iphone_backup.app.planning import build_plan
-from iphone_backup.database.manifest import Manifest
-from iphone_backup.device.simulated import FaultPlan, SimulatedDeviceSource
-from iphone_backup.metadata.exiftool_service import ExifToolService
-from iphone_backup.metadata.extractor import exiftool_extractor
-from iphone_backup.organizer.planner import OrganizerSettings, plan_folders
-from iphone_backup.transfer import space
-from iphone_backup.transfer.destination import Destination, DestinationMismatch, find_backup_by_id
-from iphone_backup.transfer.engine import BackupEngine, EngineConfig, EngineControl, SessionOutcome
-from iphone_backup.transfer.fsops import RealFs
+from iphonephotosync.app.planning import build_plan
+from iphonephotosync.database.manifest import Manifest
+from iphonephotosync.device.simulated import FaultPlan, SimulatedDeviceSource
+from iphonephotosync.metadata.exiftool_service import ExifToolService
+from iphonephotosync.metadata.extractor import exiftool_extractor
+from iphonephotosync.organizer.planner import OrganizerSettings, plan_folders
+from iphonephotosync.transfer import space
+from iphonephotosync.transfer.destination import Destination, DestinationMismatch, find_backup_by_id
+from iphonephotosync.transfer.engine import BackupEngine, EngineConfig, EngineControl, SessionOutcome
+from iphonephotosync.transfer.fsops import RealFs
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 CFG = EngineConfig(reserve_bytes=0, workers=1)       # determinista: los contadores de fallos inyectados son exactos

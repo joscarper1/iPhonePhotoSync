@@ -6,9 +6,9 @@ import pytest
 
 from media_fixtures import make_jpeg, make_mov, needs_exiftool
 from test_engine import Env, FlipFs, FullFs, sha
-from iphone_backup.database.manifest import Manifest
-from iphone_backup.metadata.exiftool_service import ExifToolService
-from iphone_backup.transfer.engine import EngineConfig, EngineControl, SessionOutcome
+from iphonephotosync.database.manifest import Manifest
+from iphonephotosync.metadata.exiftool_service import ExifToolService
+from iphonephotosync.transfer.engine import EngineConfig, EngineControl, SessionOutcome
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 P4 = EngineConfig(reserve_bytes=0, workers=4)
@@ -141,7 +141,7 @@ def test_one_manifest_transaction_per_group_not_five_per_file(env, monkeypatch):
 
 def test_reader_writer_overlap_hides_slow_disk_writes(env):
     """La escritura lenta del destino no debe sumarse a la lectura del iPhone: el escritor trabaja mientras se lee."""
-    from iphone_backup.transfer.fsops import RealFs
+    from iphonephotosync.transfer.fsops import RealFs
 
     class SlowWrite(RealFs):
         def open_write(self, path):

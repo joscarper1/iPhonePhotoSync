@@ -2,8 +2,8 @@ import os
 
 import pytest
 
-from iphone_backup.organizer.collisions import NameResolutionError, resolve_group_names
-from iphone_backup.organizer.naming import (
+from iphonephotosync.organizer.collisions import NameResolutionError, resolve_group_names
+from iphonephotosync.organizer.naming import (
     UnsafePath, month_folder, safe_join, sanitize_component, sanitize_filename, to_extended,
 )
 

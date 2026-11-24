@@ -2,10 +2,10 @@ import pytest
 
 from media_fixtures import needs_exiftool
 from test_engine import Env
-from iphone_backup.cli.__main__ import main
-from iphone_backup.database.manifest import Manifest
-from iphone_backup.metadata.exiftool_service import ExifToolService
-from iphone_backup.transfer.verify import verify_library
+from iphonephotosync.cli.__main__ import main
+from iphonephotosync.database.manifest import Manifest
+from iphonephotosync.metadata.exiftool_service import ExifToolService
+from iphonephotosync.transfer.verify import verify_library
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 

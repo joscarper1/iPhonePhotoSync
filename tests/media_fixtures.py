@@ -13,7 +13,7 @@ import tempfile
 import zlib
 from pathlib import Path
 
-from iphone_backup.metadata.exiftool_service import default_exiftool_path
+from iphonephotosync.metadata.exiftool_service import default_exiftool_path
 
 EXE = default_exiftool_path()
 needs_exiftool = EXE.is_file()

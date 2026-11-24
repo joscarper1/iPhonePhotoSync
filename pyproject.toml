@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "iphone-backup"
+name = "iphonephotosync"
 version = "0.1.0"
 description = "Respaldo local, verificable e incremental de fotos y vídeos de iPhone (Windows, Linux y macOS)"
 readme = "README.md"
@@ -29,16 +29,16 @@ dependencies = [
 dev = ["pytest>=8", "pytest-xdist>=3.5", "numpy>=1.26", "pyinstaller>=6.10"]
 
 [project.scripts]
-iphone-backup = "iphone_backup.cli.__main__:main"
+iphonephotosync = "iphonephotosync.cli.__main__:main"
 
 [project.gui-scripts]
-iphone-backup-ui = "iphone_backup.ui.app:main"
+iphonephotosync-ui = "iphonephotosync.ui.app:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-iphone_backup = ["data/geonames.sqlite"]
+iphonephotosync = ["data/geonames.sqlite"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

@@ -3,8 +3,8 @@ from collections import namedtuple
 
 import pytest
 
-from iphone_backup.transfer import space
-from iphone_backup.transfer.space import (
+from iphonephotosync.transfer import space
+from iphonephotosync.transfer.space import (
     GIB, MIN_RESERVE, check_space, default_reserve, filesystem_name, has_room_for, oversized_for_fs, required_bytes,
 )
 

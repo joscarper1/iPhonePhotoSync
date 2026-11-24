@@ -2,10 +2,10 @@ from datetime import datetime, timezone
 
 import pytest
 
-from iphone_backup.domain.filetypes import FileKind
-from iphone_backup.domain.models import DateSource
-from iphone_backup.metadata.live import confirm_pair
-from iphone_backup.metadata.policy import interpret, parse_exif_datetime
+from iphonephotosync.domain.filetypes import FileKind
+from iphonephotosync.domain.models import DateSource
+from iphonephotosync.metadata.live import confirm_pair
+from iphonephotosync.metadata.policy import interpret, parse_exif_datetime
 
 NOW = datetime(2026, 11, 23, tzinfo=timezone.utc)
 CID = "ABCDEF01-2345-6789-ABCD-EF0123456789"

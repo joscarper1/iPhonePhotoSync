@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from iphone_backup.device.simulated import FaultPlan, SimulatedDeviceSource
-from iphone_backup.ports.device import (
+from iphonephotosync.device.simulated import FaultPlan, SimulatedDeviceSource
+from iphonephotosync.ports.device import (
     FORBIDDEN_DEVICE_METHODS, DeviceDisconnected, DeviceLocked, DeviceReadError, DeviceSource,
     ReadHandle, iter_chunks,
 )

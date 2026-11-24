@@ -4,11 +4,11 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from iphone_backup.app.status import fit_time_model, read_status
-from iphone_backup.cli.__main__ import main
-from iphone_backup.cli.progress import LiveBar, bar, fmt_bytes, fmt_eta, render_status
-from iphone_backup.database.manifest import Manifest
-from iphone_backup.domain.models import DeviceFile, ItemStatus, VerifyStatus
+from iphonephotosync.app.status import fit_time_model, read_status
+from iphonephotosync.cli.__main__ import main
+from iphonephotosync.cli.progress import LiveBar, bar, fmt_bytes, fmt_eta, render_status
+from iphonephotosync.database.manifest import Manifest
+from iphonephotosync.domain.models import DeviceFile, ItemStatus, VerifyStatus
 
 NOW = datetime(2026, 11, 23, 12, 0, 0, tzinfo=timezone.utc)
 
@@ -34,7 +34,7 @@ def make_manifest(tmp_path, committed, pending, gap=1.0, size=2_000_000, session
     mf = Manifest(tmp_path / "m.sqlite")
     sid = mf.start_session("U")
     if not session_running:
-        from iphone_backup.domain.models import SessionStatus
+        from iphonephotosync.domain.models import SessionStatus
         mf.finish_session(sid, SessionStatus.COMPLETED)
     for i in range(committed + pending):
         iid, _ = mf.upsert_discovered(sid, "U", DeviceFile(f"/DCIM/100APPLE/IMG_{i:04d}.JPG", size, i))

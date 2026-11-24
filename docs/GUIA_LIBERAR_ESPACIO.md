@@ -5,7 +5,7 @@
 ## 1. Genera el informe (con el iPhone conectado y desbloqueado)
 
 ```powershell
-python -m iphone_backup.cli deletion-report --dest "D:\Respaldo"
+python -m iphonephotosync.cli deletion-report --dest "D:\Respaldo"
 ```
 
 Crea en `D:\Respaldo\iPhone_Photos\_Logs\`:
@@ -30,7 +30,7 @@ El informe relee las copias del disco (SHA-256) y comprueba que **a salvo + exce
 El informe **solo cubre lo que existía en el iPhone cuando se generó**. Lo que tomes o recibas después no está cubierto: no lo borres. Después de borrar, ejecuta:
 
 ```powershell
-python -m iphone_backup.cli verify --dest "D:\Respaldo" --device
+python -m iphonephotosync.cli verify --dest "D:\Respaldo" --device
 ```
 
 ## 4. Borrar en el iPhone

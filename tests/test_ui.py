@@ -8,8 +8,8 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 QtWidgets = pytest.importorskip("PySide6.QtWidgets")
 
 from media_fixtures import make_jpeg, make_mov, needs_exiftool
-from iphone_backup.app.workflow import UserSettings, Workflow
-from iphone_backup.ui.main_window import PAGE_BACKUP, PAGE_HOME, PAGE_SCAN, PAGE_SUMMARY, MainWindow
+from iphonephotosync.app.workflow import UserSettings, Workflow
+from iphonephotosync.ui.main_window import PAGE_BACKUP, PAGE_HOME, PAGE_SCAN, PAGE_SUMMARY, MainWindow
 
 pytestmark = pytest.mark.skipif(not needs_exiftool, reason="ExifTool no instalado")
 
@@ -163,7 +163,7 @@ def test_phase_panel_shows_all_phases_upfront_and_their_progress(win, qapp):
 
 
 def test_pause_and_resume_buttons(win, qapp):
-    from iphone_backup.transfer.engine import EngineControl
+    from iphonephotosync.transfer.engine import EngineControl
     win._control = EngineControl()
     win.toggle_pause()
     assert win.btn_pause.text() == "Reanudar" and not win._control._running.is_set()

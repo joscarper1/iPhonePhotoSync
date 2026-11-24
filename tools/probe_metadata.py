@@ -16,14 +16,14 @@ import time
 from collections import Counter
 from pathlib import Path
 
-from iphone_backup.device.afc_source import AfcDeviceSource
-from iphone_backup.domain.filetypes import FileKind, classify
-from iphone_backup.metadata.device_probe import probe_tags
-from iphone_backup.metadata.exiftool_service import ExifToolService
-from iphone_backup.metadata.live import confirm_pair
-from iphone_backup.metadata.policy import interpret
-from iphone_backup.ports.device import DeviceError, iter_chunks
-from iphone_backup.scanner import scan
+from iphonephotosync.device.afc_source import AfcDeviceSource
+from iphonephotosync.domain.filetypes import FileKind, classify
+from iphonephotosync.metadata.device_probe import probe_tags
+from iphonephotosync.metadata.exiftool_service import ExifToolService
+from iphonephotosync.metadata.live import confirm_pair
+from iphonephotosync.metadata.policy import interpret
+from iphonephotosync.ports.device import DeviceError, iter_chunks
+from iphonephotosync.scanner import scan
 
 
 def key(m):

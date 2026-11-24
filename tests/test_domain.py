@@ -1,7 +1,7 @@
 import pytest
 
-from iphone_backup.domain.filetypes import FileKind, classify
-from iphone_backup.domain.models import (
+from iphonephotosync.domain.filetypes import FileKind, classify
+from iphonephotosync.domain.models import (
     DeviceFile, InvalidTransition, ItemStatus, can_transition, check_transition,
 )
 
