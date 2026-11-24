@@ -29,20 +29,42 @@ def get(url: str) -> bytes:
         return r.read()
 
 
-def windows() -> None:
-    ver = get("https://exiftool.org/ver.txt").decode().strip()
-    z = zipfile.ZipFile(io.BytesIO(get(f"https://exiftool.org/exiftool-{ver}_64.zip")))
+def _windows_from_org() -> Path | None:
+    """exiftool.org solo conserva la última versión y a veces rechaza clientes automáticos: se intenta y, si falla,
+    se usa la copia del paquete de Chocolatey (``choco install exiftool``)."""
+    try:
+        ver = get("https://exiftool.org/ver.txt").decode().strip()
+        z = zipfile.ZipFile(io.BytesIO(get(f"https://exiftool.org/exiftool-{ver}_64.zip")))
+    except Exception as e:  # noqa: BLE001
+        print(f"exiftool.org no disponible ({e}); se intenta con Chocolatey")
+        return None
     tmp = DEST.with_name("_exiftool_tmp")
     shutil.rmtree(tmp, ignore_errors=True)
     z.extractall(tmp)
-    root = next(p for p in tmp.rglob("exiftool(-k).exe")).parent
+    return next(p for p in tmp.rglob("exiftool(-k).exe")).parent
+
+
+def _windows_from_choco() -> Path | None:
+    base = Path(os.environ.get("ChocolateyInstall", r"C:\ProgramData\chocolatey")) / "lib" / "exiftool"
+    for exe in list(base.rglob("exiftool(-k).exe")) + list(base.rglob("exiftool.exe")):
+        if exe.parent.name != "bin":
+            return exe.parent
+    return None
+
+
+def windows() -> None:
+    root = _windows_from_org() or _windows_from_choco()
+    if root is None:
+        sys.exit("No se pudo obtener ExifTool para Windows: instálalo con 'choco install exiftool' o descarga el .zip "
+                 "de https://exiftool.org y copia exiftool.exe (y exiftool_files/) a tools/exiftool/.")
+    src_exe = root / "exiftool(-k).exe" if (root / "exiftool(-k).exe").is_file() else root / "exiftool.exe"
     shutil.rmtree(DEST, ignore_errors=True)
     DEST.mkdir(parents=True)
-    shutil.copy2(root / "exiftool(-k).exe", DEST / "exiftool.exe")
+    shutil.copy2(src_exe, DEST / "exiftool.exe")
     if (root / "exiftool_files").is_dir():
         shutil.copytree(root / "exiftool_files", DEST / "exiftool_files")
-    shutil.rmtree(tmp, ignore_errors=True)
-    print(f"ExifTool {ver} (Windows) en {DEST}")
+    shutil.rmtree(DEST.with_name("_exiftool_tmp"), ignore_errors=True)
+    print(f"ExifTool (Windows) desde {root} en {DEST}")
 
 
 def posix() -> None:
