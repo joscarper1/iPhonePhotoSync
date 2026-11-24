@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+
+# Binarios de terceros que se descargan en la compilación (ver tools/fetch_exiftool.py)
+tools/exiftool/
+
+# Resultados de pruebas con un iPhone REAL: contienen nombres de lugares, rutas y datos personales
+docs/*.json
+docs/viability_report.md
+
+# Notas internas y lanzadores de esta máquina
+Requerimiento_*.md
+iniciar_interfaz.ps1
+.claude/
+
+# Datos de usuario que NUNCA deben subirse
+*.sqlite-wal
+*.sqlite-shm
+settings.json
+_Manifest/
+_Logs/
+_Quarantine/
+_Staging/

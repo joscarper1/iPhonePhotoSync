@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iphone-backup"
+version = "0.1.0"
+description = "Respaldo local, verificable e incremental de fotos y vídeos de iPhone (Windows, Linux y macOS)"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "GPL-3.0-or-later" }
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Topic :: System :: Archiving :: Backup",
+]
+dependencies = [
+    "pymobiledevice3==11.63.1",
+    "PySide6-Essentials==6.8.2.1",
+    "pillow>=10",
+    "pillow-heif>=1.0",
+    "av>=14",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "numpy>=1.26", "pyinstaller>=6.10"]
+
+[project.scripts]
+iphone-backup = "iphone_backup.cli.__main__:main"
+
+[project.gui-scripts]
+iphone-backup-ui = "iphone_backup.ui.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+iphone_backup = ["data/geonames.sqlite"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,79 @@
+name: Release
+
+# Se ejecuta al subir una etiqueta de versión (v0.1.0, v1.2.3…): compila la aplicación para cada sistema operativo y
+# adjunta los paquetes a una Release de GitHub, con sumas SHA-256.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Compilar (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: windows-latest, name: windows-x64 }
+          - { os: ubuntu-22.04, name: linux-x64 }
+          - { os: macos-latest, name: macos-arm64 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Dependencias del sistema (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libegl1 libgl1 libxkbcommon0 libdbus-1-3 libfontconfig1 libglib2.0-0 libxcb-cursor0
+      - name: Instalar el proyecto y PyInstaller
+        run: python -m pip install -e ".[dev]"
+      - name: ExifTool (se incluye en la aplicación)
+        run: python tools/fetch_exiftool.py
+      - name: Pruebas
+        # Linux y macOS son experimentales: se ejecutan y se ven, pero no impiden publicar el paquete
+        continue-on-error: ${{ runner.os != 'Windows' }}
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m pytest -q
+      - name: Empaquetar
+        run: python -m PyInstaller --noconfirm --clean packaging/iphone_backup.spec
+      - name: Comprimir (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: Compress-Archive -Path dist/iphone-backup -DestinationPath "iphone-backup-${{ github.ref_name }}-${{ matrix.name }}.zip"
+      - name: Comprimir (Linux)
+        if: runner.os == 'Linux'
+        run: tar -czf "iphone-backup-${{ github.ref_name }}-${{ matrix.name }}.tar.gz" -C dist iphone-backup
+      - name: Comprimir (macOS)
+        if: runner.os == 'macOS'
+        run: ditto -c -k --sequesterRsrc --keepParent "dist/Respaldo de iPhone.app" "iphone-backup-${{ github.ref_name }}-${{ matrix.name }}.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paquete-${{ matrix.name }}
+          path: iphone-backup-*
+          if-no-files-found: error
+
+  publish:
+    name: Publicar Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: paquetes
+          merge-multiple: true
+      - name: Sumas SHA-256
+        run: cd paquetes && sha256sum iphone-backup-* > SHA256SUMS.txt
+      - name: Crear la Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" paquetes/* --repo "${{ github.repository }}" \
+            --title "${{ github.ref_name }}" --generate-notes \
+            --notes "Licencia GPL-3.0-or-later. El código fuente exacto de esta versión está en la etiqueta ${{ github.ref_name }} de este repositorio (archivo 'Source code' de esta Release). Windows está verificado con un iPhone real; Linux y macOS son experimentales. Los ejecutables no están firmados: ver el README."
