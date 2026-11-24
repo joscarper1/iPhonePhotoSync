@@ -26,7 +26,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "numpy>=1.26", "pyinstaller>=6.10"]
+dev = ["pytest>=8", "pytest-xdist>=3.5", "numpy>=1.26", "pyinstaller>=6.10"]
 
 [project.scripts]
 iphone-backup = "iphone_backup.cli.__main__:main"

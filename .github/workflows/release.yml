@@ -5,6 +5,7 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:          # ejecución manual: compila los paquetes y los deja como archivos de la corrida, SIN publicar
 
 permissions:
   contents: write
@@ -43,7 +44,7 @@ jobs:
         continue-on-error: ${{ runner.os != 'Windows' }}
         env:
           QT_QPA_PLATFORM: offscreen
-        run: python -m pytest -q
+        run: python -m pytest -q -n auto
       - name: Empaquetar
         run: python -m PyInstaller --noconfirm --clean packaging/iphone_backup.spec
       - name: Comprimir (Windows)
@@ -65,6 +66,7 @@ jobs:
   publish:
     name: Publicar Release
     needs: build
+    if: startsWith(github.ref, 'refs/tags/v')      # solo con una etiqueta de versión; la ejecución manual no publica
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4

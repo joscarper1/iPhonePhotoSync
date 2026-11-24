@@ -4,8 +4,12 @@ Se usa ExifTool solo aquí, para ESCRIBIR etiquetas en archivos de prueba creado
 """
 from __future__ import annotations
 
+import atexit
+import hashlib
+import shutil
 import struct
 import subprocess
+import tempfile
 import zlib
 from pathlib import Path
 
@@ -32,13 +36,29 @@ def _write_tags(path: Path, tags: dict[str, str]) -> None:
         raise RuntimeError(r.stderr or r.stdout)
 
 
-def make_jpeg(path: Path, tags: dict[str, str] | None = None) -> Path:
+_CACHE = Path(tempfile.mkdtemp(prefix="ib_fixtures_"))        # una carpeta por ejecución de pytest
+atexit.register(shutil.rmtree, _CACHE, True)
+
+
+def _cached(path: Path, key: tuple, build) -> Path:
+    """Escribir etiquetas con ExifTool cuesta ~1 s por archivo en Windows. Los medios con las mismas etiquetas son
+    idénticos, así que se generan UNA vez por ejecución y después se copian (mismo contenido; fecha de copia nueva)."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    from PIL import Image
-    Image.new("RGB", (2, 2), (255, 255, 255)).save(path, "JPEG")   # JPEG válido sintético
-    if tags:
-        _write_tags(path, tags)
+    name = hashlib.sha1(repr(key).encode()).hexdigest() + path.suffix
+    cached = _CACHE / name
+    if not cached.is_file():
+        build(cached)
+    shutil.copyfile(cached, path)
     return path
+
+
+def make_jpeg(path: Path, tags: dict[str, str] | None = None) -> Path:
+    def build(dest: Path) -> None:
+        from PIL import Image
+        Image.new("RGB", (2, 2), (255, 255, 255)).save(dest, "JPEG")   # JPEG válido sintético
+        if tags:
+            _write_tags(dest, tags)
+    return _cached(path, ("jpeg", tuple(sorted((tags or {}).items()))), build)
 
 
 def make_png(path: Path) -> Path:
@@ -53,16 +73,16 @@ def make_png(path: Path) -> Path:
 
 def make_mov(path: Path, tags: dict[str, str] | None = None, mdat_before_moov: int = 0) -> Path:
     """MOV mínimo con átomo moov. Con ``mdat_before_moov`` > 0 el moov queda AL FINAL (como en iPhone)."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    base = (_box(b"ftyp", b"qt  " + struct.pack(">I", 0) + b"qt  ") + _box(b"moov", _mvhd())
-            + _box(b"mdat", b"\0" * 16))
-    path.write_bytes(base)
-    if tags:
-        _write_tags(path, tags)
-    if mdat_before_moov:
-        data = path.read_bytes()
-        ftyp_len = struct.unpack(">I", data[:4])[0]
-        rest = data[ftyp_len:]
-        # reordenar: ftyp + mdat grande + (todo lo demás, que contiene el moov con las etiquetas)
-        path.write_bytes(data[:ftyp_len] + _box(b"mdat", b"\xab" * mdat_before_moov) + rest)
-    return path
+    def build(dest: Path) -> None:
+        base = (_box(b"ftyp", b"qt  " + struct.pack(">I", 0) + b"qt  ") + _box(b"moov", _mvhd())
+                + _box(b"mdat", b"\0" * 16))
+        dest.write_bytes(base)
+        if tags:
+            _write_tags(dest, tags)
+        if mdat_before_moov:
+            data = dest.read_bytes()
+            ftyp_len = struct.unpack(">I", data[:4])[0]
+            rest = data[ftyp_len:]
+            # reordenar: ftyp + mdat grande + (todo lo demás, que contiene el moov con las etiquetas)
+            dest.write_bytes(data[:ftyp_len] + _box(b"mdat", b"\xab" * mdat_before_moov) + rest)
+    return _cached(path, ("mov", tuple(sorted((tags or {}).items())), mdat_before_moov), build)

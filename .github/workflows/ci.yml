@@ -42,4 +42,4 @@ jobs:
       - name: ExifTool
         run: python tools/fetch_exiftool.py
       - name: Pruebas
-        run: python -m pytest -q
+        run: python -m pytest -q -n auto
