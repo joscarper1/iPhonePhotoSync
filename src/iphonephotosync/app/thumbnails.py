@@ -149,8 +149,10 @@ class ThumbnailService:
                 return _jpeg(im)
 
     def _video_first_frame(self, f: DeviceFile) -> bytes | None:
-        import av
-        from PIL import Image
+        try:
+            import av
+        except ImportError:                  # paquete base sin ffmpeg: sin vista previa de este vídeo
+            return None
         with self.source.open_read(f.path) as h:
             rf = RemoteFile(h)
             with av.open(rf.buffered(), mode="r") as c:

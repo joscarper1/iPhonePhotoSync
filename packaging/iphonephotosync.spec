@@ -8,7 +8,7 @@ from PyInstaller.utils.hooks import collect_all
 
 ROOT = Path(SPECPATH).parent
 datas, binaries, hiddenimports = [], [], []
-for pkg in ("pymobiledevice3", "pillow_heif", "av"):          # importaciones dinámicas y bibliotecas nativas
+for pkg in ("pymobiledevice3", "pillow_heif"):                # importaciones dinámicas y bibliotecas nativas
     d, b, h = collect_all(pkg)
     datas += d
     binaries += b
@@ -25,9 +25,24 @@ a = Analysis(
     binaries=binaries,
     datas=datas,
     hiddenimports=hiddenimports,
-    excludes=["tkinter", "pytest"],
+    # Paquete ligero: sin ffmpeg (av), sin numpy (solo pruebas) ni la consola interactiva (jedi/IPython: 5.500 archivos)
+    excludes=["tkinter", "pytest", "av", "numpy", "jedi", "parso", "IPython", "prompt_toolkit", "qh3"],
     noarchive=False,
 )
+
+
+def _keep(entry):
+    """Quita de Qt el renderizador de software (20 MB) y las traducciones que no son del español."""
+    name = entry[0].replace("\\", "/").lower()
+    if name.endswith("opengl32sw.dll"):
+        return False
+    if "/translations/" in name and "_es" not in name:
+        return False
+    return True
+
+
+a.binaries = [e for e in a.binaries if _keep(e)]
+a.datas = [e for e in a.datas if _keep(e)]
 pyz = PYZ(a.pure)
 exe = EXE(
     pyz, a.scripts, [],

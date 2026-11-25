@@ -26,7 +26,7 @@ Descarga el paquete de tu sistema y descomprímelo. Enlaces directos a **la últ
 
 | Sistema | Descarga |
 |---|---|
-| Windows 10/11 (x64) | [iphonephotosync-windows-x64.zip](https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-windows-x64.zip) |
+| Windows 10/11 (x64) | [iphonephotosync-setup.exe](https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-setup.exe) (instalador) · [iphonephotosync-windows-x64.zip](https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-windows-x64.zip) (portátil) |
 | macOS (Apple Silicon) | [iphonephotosync-macos-arm64.zip](https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-macos-arm64.zip) |
 | Linux (x64) | [iphonephotosync-linux-x64.tar.gz](https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-linux-x64.tar.gz) |
 
@@ -57,6 +57,9 @@ python tools/fetch_exiftool.py        # descarga ExifTool a tools/exiftool
 iphonephotosync-ui                      # interfaz
 iphonephotosync --help                  # línea de comandos (scan, preview, backup, verify, status, deletion-report)
 ```
+
+Miniaturas de vídeos sin miniatura propia en el iPhone: el paquete ligero no incluye ffmpeg; desde el código fuente
+se activan con `python -m pip install -e ".[video]"`.
 
 Modo de pruebas sin iPhone: `iphonephotosync-ui --simulate CARPETA` (una carpeta con subcarpeta `DCIM/`).
 

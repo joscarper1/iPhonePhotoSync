@@ -22,11 +22,11 @@ dependencies = [
     "PySide6-Essentials==6.8.2.1",
     "pillow>=10",
     "pillow-heif>=1.0",
-    "av>=14",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pytest-xdist>=3.5", "numpy>=1.26", "pyinstaller>=6.10"]
+video = ["av>=14"]          # miniaturas de vídeos sin miniatura nativa (primer fotograma); añade ~67 MB
+dev = ["pytest>=8", "pytest-xdist>=3.5", "numpy>=1.26", "av>=14", "pyinstaller>=6.10"]
 
 [project.scripts]
 iphonephotosync = "iphonephotosync.cli.__main__:main"
