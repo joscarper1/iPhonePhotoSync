@@ -26,7 +26,7 @@ a = Analysis(
     datas=datas,
     hiddenimports=hiddenimports,
     # Paquete ligero: sin ffmpeg (av), sin numpy (solo pruebas) ni la consola interactiva (jedi/IPython: 5.500 archivos)
-    excludes=["tkinter", "pytest", "av", "numpy", "jedi", "parso", "IPython", "prompt_toolkit", "qh3"],
+    excludes=["tkinter", "pytest", "av", "numpy", "jedi", "parso", "IPython"],
     noarchive=False,
 )
 

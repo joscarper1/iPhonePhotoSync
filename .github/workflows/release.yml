@@ -55,6 +55,8 @@ jobs:
           if (-not (Test-Path dist/iphonephotosync/iphonephotosync.exe)) { throw "Falta iphonephotosync.exe" }
           if (-not (Test-Path dist/iphonephotosync/_internal/tools/exiftool/exiftool.exe)) { throw "Falta ExifTool" }
           if (-not (Test-Path dist/iphonephotosync/_internal/iphonephotosync/data/geonames.sqlite)) { throw "Falta la base GeoNames" }
+          $out = & dist/iphonephotosync/iphonephotosync.exe --selfcheck | Out-String
+          $out; if ($out -notmatch "SELFCHECK OK") { throw "El ejecutable no pasa la autocomprobacion" }
       - name: Comprobar el contenido del paquete (Linux)
         if: runner.os == 'Linux'
         run: |
@@ -62,11 +64,13 @@ jobs:
           test -x dist/iphonephotosync/iphonephotosync
           test -f dist/iphonephotosync/_internal/tools/exiftool/exiftool
           test -f dist/iphonephotosync/_internal/iphonephotosync/data/geonames.sqlite
+          dist/iphonephotosync/iphonephotosync --selfcheck | tee /dev/stderr | grep -q "SELFCHECK OK"
       - name: Comprobar el contenido del paquete (macOS)
         if: runner.os == 'macOS'
         run: |
           ls "dist/iPhonePhotoSync.app/Contents/MacOS" | head -8
           test -x "dist/iPhonePhotoSync.app/Contents/MacOS/iphonephotosync"
+          "dist/iPhonePhotoSync.app/Contents/MacOS/iphonephotosync" --selfcheck | tee /dev/stderr | grep -q "SELFCHECK OK"
       - name: Comprimir (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
