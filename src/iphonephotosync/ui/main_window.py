@@ -14,6 +14,8 @@ from PySide6.QtWidgets import (
 from iphonephotosync.app.workflow import (
     FinalSummary, ScanInvalid, ScanReport, UserSettings, Workflow, friendly, normalize_dest,
 )
+from iphonephotosync.support import SupportConfig, install_support_menu
+from iphonephotosync.support_config import SUPPORT
 from iphonephotosync.transfer.engine import EngineControl
 from iphonephotosync.ui.dialogs import HistoryDialog, SettingsDialog
 from iphonephotosync.ui.gallery import PendingGallery
@@ -55,7 +57,8 @@ def _card(title: str) -> tuple[QGroupBox, QVBoxLayout]:
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, workflow: Workflow, settings: UserSettings, *, simulated: bool = False, save_settings=True):
+    def __init__(self, workflow: Workflow, settings: UserSettings, *, simulated: bool = False, save_settings=True,
+                 support: SupportConfig | None = None):
         super().__init__()
         self.wf, self.settings = workflow, settings
         self._save = save_settings
@@ -79,6 +82,8 @@ class MainWindow(QMainWindow):
         self.stack.addWidget(self._build_scan())
         self.stack.addWidget(self._build_backup())
         self.stack.addWidget(self._build_summary())
+        # Ayuda > Apoyar este proyecto: solo aparece si hay algún proveedor con URL válida (si no, no hay menú alguno)
+        self.support_action = install_support_menu(self, support or SupportConfig.from_dict(SUPPORT))
         self._timer = QTimer(self)
         self._timer.setInterval(500)
         self._timer.timeout.connect(self._tick)

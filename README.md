@@ -99,3 +99,8 @@ leen los álbumes y la marca de favorito, y la copia temporal se borra.
 (GeoNames CC-BY 4.0, ExifTool, Qt/PySide6, FFmpeg, libheif…) en [docs/THIRD_PARTY.md](docs/THIRD_PARTY.md).
 
 Datos geográficos: © GeoNames, <https://www.geonames.org> (CC-BY 4.0).
+
+## Apoyar el proyecto
+
+Es gratuito. Si te resulta útil, el menú **Ayuda → Apoyar este proyecto** (cuando hay enlaces configurados) ofrece
+aportaciones voluntarias en el sitio del proveedor. Configuración y reutilización: [docs/APOYO_AL_PROYECTO.md](docs/APOYO_AL_PROYECTO.md).
