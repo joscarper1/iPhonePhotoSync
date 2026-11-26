@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iPhonePhotoSync — Respalda las fotos de tu iPhone por USB</title>
+<meta name="description" content="Copia las fotos y vídeos originales de tu iPhone a tu disco por USB, sin tocar el teléfono, con verificación SHA-256 e incremental. Gratis, de código abierto y 100% local.">
+<link rel="canonical" href="https://joscarper1.github.io/iPhonePhotoSync/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="iPhonePhotoSync — Respalda las fotos de tu iPhone por USB">
+<meta property="og:description" content="Originales sin modificar, verificación SHA-256, copia incremental. Gratis, código abierto y 100% local.">
+<meta property="og:url" content="https://joscarper1.github.io/iPhonePhotoSync/">
+<meta name="theme-color" content="#0b1220">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Crect x='21' y='10' width='22' height='44' rx='5' fill='none' stroke='white' stroke-width='4'/%3E%3Cpath d='M32 24v14m-6-6 6 6 6-6' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f7f9fc; --surface:#ffffff; --text:#0f172a; --muted:#475569; --line:#e2e8f0;
+  --brand:#2563eb; --brand-d:#1d4ed8; --brand-soft:#e8f0fe; --ok:#15803d; --warn:#b45309; --code:#0f172a; --codetx:#e2e8f0;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1220; --surface:#111a2e; --text:#e6edf7; --muted:#9fb0c7; --line:#22304a;
+    --brand:#5b9bff; --brand-d:#7db0ff; --brand-soft:#16264a; --ok:#4ade80; --warn:#fbbf24; --code:#060b16; --codetx:#d6e2f5;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1220; --surface:#111a2e; --text:#e6edf7; --muted:#9fb0c7; --line:#22304a;
+  --brand:#5b9bff; --brand-d:#7db0ff; --brand-soft:#16264a; --ok:#4ade80; --warn:#fbbf24; --code:#060b16; --codetx:#d6e2f5;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:18px;height:58px}
+.logo{font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:9px}
+.logo svg{width:26px;height:26px}
+.nav nav{margin-left:auto;display:flex;gap:18px;align-items:center}
+.nav nav a{color:var(--muted);text-decoration:none;font-size:.93rem}
+.nav nav a:hover{color:var(--text)}
+.nav button{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:.9rem}
+@media(max-width:700px){.nav nav a.hide-sm{display:none}}
+.hero{padding:72px 0 56px;text-align:center}
+.badge{display:inline-block;background:var(--brand-soft);color:var(--brand);border-radius:999px;padding:4px 14px;font-size:.82rem;font-weight:600}
+h1{font-size:clamp(2.1rem,5.5vw,3.6rem);line-height:1.1;margin:18px auto 16px;max-width:820px;letter-spacing:-.02em}
+.lead{color:var(--muted);font-size:1.18rem;max-width:720px;margin:0 auto 30px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-weight:600;text-decoration:none;border:1px solid var(--line);color:var(--text);background:var(--surface)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.primary:hover{background:var(--brand-d)}
+.btn:hover{border-color:var(--brand)}
+.meta{margin-top:18px;color:var(--muted);font-size:.9rem}
+section{padding:56px 0}
+section h2{font-size:1.8rem;margin:0 0 8px;letter-spacing:-.01em}
+section .sub{color:var(--muted);margin:0 0 30px;max-width:680px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{margin:8px 0 6px;font-size:1.05rem}
+.card p{margin:0;color:var(--muted);font-size:.95rem}
+.ico{font-size:1.6rem}
+pre{background:var(--code);color:var(--codetx);border-radius:12px;padding:18px 20px;overflow:auto;font:.9rem/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;margin:0}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+p code,li code,td code{background:var(--brand-soft);color:var(--text);padding:1px 6px;border-radius:5px;font-size:.88em}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.95rem}
+th{background:var(--brand-soft);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;font-size:.74rem;font-weight:700;border-radius:6px;padding:2px 8px;margin-left:6px}
+.tag.ok{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.tag.exp{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.steps{counter-reset:s;display:grid;gap:14px;padding:0;list-style:none;margin:0}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px 18px 66px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:18px;top:16px;width:34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700}
+.split{display:grid;gap:24px;grid-template-columns:1fr 1fr}
+@media(max-width:800px){.split{grid-template-columns:1fr}}
+.notice{border-left:4px solid var(--warn);background:var(--surface);border-radius:8px;padding:14px 18px;color:var(--muted);font-size:.94rem}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+details p{color:var(--muted);margin:10px 0 0}
+.band{background:var(--surface);border-block:1px solid var(--line)}
+footer{padding:40px 0;color:var(--muted);font-size:.9rem;text-align:center;border-top:1px solid var(--line)}
+footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="iPhonePhotoSync">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2563eb"/><rect x="21" y="10" width="22" height="44" rx="5" fill="none" stroke="#fff" stroke-width="4"/><path d="M32 24v14m-6-6 6 6 6-6" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      iPhonePhotoSync
+    </a>
+    <nav>
+      <a class="hide-sm" href="#funciones">Funciones</a>
+      <a class="hide-sm" href="#descargas">Descargas</a>
+      <a class="hide-sm" href="#faq">Preguntas</a>
+      <a href="https://github.com/joscarper1/iPhonePhotoSync">GitHub</a>
+      <button id="theme" type="button" aria-label="Cambiar tema" title="Cambiar tema">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<div class="wrap hero">
+  <span class="badge">Gratis · Código abierto · 100 % local</span>
+  <h1>Respalda las fotos de tu iPhone en tu propio disco</h1>
+  <p class="lead">Copia <strong>fotos y vídeos originales</strong> por USB, <strong>sin modificar nada en el teléfono</strong>, con verificación SHA-256 y de forma incremental. Sin nube, sin cuentas, sin suscripciones.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-setup.exe">⬇ Descargar para Windows</a>
+    <a class="btn" href="#descargas">macOS y Linux</a>
+    <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync">Ver código</a>
+  </div>
+  <p class="meta">Última versión: <strong id="ver">…</strong> · GPL-3.0-or-later · Windows 10/11 verificado con iPhone real</p>
+</div>
+
+<section id="funciones" class="band">
+  <div class="wrap">
+    <h2>Qué hace</h2>
+    <p class="sub">Pensada para quien quiere tener sus recuerdos a salvo y poder liberar espacio en el iPhone con confianza.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">🔒</div><h3>Solo lectura</h3><p>Lee <code>/DCIM</code> por USB. Nunca escribe, mueve ni borra nada en el iPhone. No recomprime ni convierte (HEIC, JPEG, PNG, MOV, MP4, Live Photos y <code>.AAE</code>).</p></div>
+      <div class="card"><div class="ico">✅</div><h3>Verificación SHA-256</h3><p>Copia atómica (temporal → renombrado), comprobación de integridad y <strong>nunca sobrescribe</strong> un archivo existente.</p></div>
+      <div class="card"><div class="ico">🔁</div><h3>Incremental y reanudable</h3><p>Detecta qué falta respaldar comparando con tu copia anterior y tu biblioteca. Si se corta, continúa sin repetir lo ya copiado.</p></div>
+      <div class="card"><div class="ico">🗂️</div><h3>Organización automática</h3><p>Álbum › Año › Mes › Lugar, usando fecha de captura, GPS (geocodificación <strong>sin Internet</strong>) y los álbumes del iPhone.</p></div>
+      <div class="card"><div class="ico">🖼️</div><h3>Galería de miniaturas</h3><p>Revisa lo pendiente y elige qué respaldar antes de copiar.</p></div>
+      <div class="card"><div class="ico">🧾</div><h3>Informe claro</h3><p>Dice qué se copió, qué no y por qué, y genera la lista de lo que <strong>no</strong> debes borrar del iPhone.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="uso">
+  <div class="wrap">
+    <h2>Cómo se usa</h2>
+    <p class="sub">Tres pasos desde la interfaz gráfica.</p>
+    <ol class="steps">
+      <li><strong>Conecta y confía.</strong> Conecta el iPhone por USB, desbloquéalo y pulsa <em>Confiar</em>.</li>
+      <li><strong>Escanea.</strong> Elige el disco de destino (la carpeta que <em>contiene</em> <code>iPhone_Photos</code>) y pulsa <em>Escanear iPhone</em>.</li>
+      <li><strong>Respalda.</strong> Revisa lo pendiente, marca lo que quieras y pulsa <em>Respaldar</em>.</li>
+    </ol>
+    <div class="split" style="margin-top:28px">
+      <div>
+        <h3>También por línea de comandos</h3>
+<pre>python -m pip install -e ".[dev]"
+python tools/fetch_exiftool.py
+iphonephotosync-ui          # interfaz
+iphonephotosync --help      # scan, preview, backup,
+                            # verify, status,
+                            # deletion-report</pre>
+      </div>
+      <div>
+        <h3>Así queda tu biblioteca</h3>
+<pre>iPhone_Photos/
+├─ Vacaciones 2025/
+│  └─ 2025/07/Roma/IMG_0412.HEIC
+├─ 2025/
+│  └─ 08/Guadalajara/IMG_0530.JPG
+└─ Fecha desconocida/</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="descargas" class="band">
+  <div class="wrap">
+    <h2>Descargas</h2>
+    <p class="sub">Enlaces directos a la <strong>última versión</strong>. Cada release incluye <code>SHA256SUMS.txt</code> para comprobar la integridad.</p>
+    <table>
+      <thead><tr><th>Sistema</th><th>Descarga</th><th>Requisitos</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Windows 10/11 (x64)</strong><span class="tag ok">Verificado</span></td>
+          <td><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-setup.exe">Instalador (.exe)</a><br><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-windows-x64.zip">Portátil (.zip)</a></td>
+          <td><strong>Apple Devices</strong> (Microsoft Store) o iTunes, para el controlador USB.</td>
+        </tr>
+        <tr>
+          <td><strong>macOS (Apple Silicon)</strong><span class="tag exp">Experimental</span></td>
+          <td><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-macos-arm64.zip">.zip</a></td>
+          <td>Primera vez: clic derecho → <em>Abrir</em> (no está firmada ni notarizada).</td>
+        </tr>
+        <tr>
+          <td><strong>Linux (x64)</strong><span class="tag exp">Experimental</span></td>
+          <td><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-linux-x64.tar.gz">.tar.gz</a></td>
+          <td><code>usbmuxd</code> en marcha y <code>perl</code> (para ExifTool).</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:16px;color:var(--muted)">Todas las versiones: <a href="https://github.com/joscarper1/iPhonePhotoSync/releases">github.com/joscarper1/iPhonePhotoSync/releases</a></p>
+    <div class="notice" id="signing" style="margin-top:16px">
+      <strong>Firma de código.</strong> Este proyecto usa la <a href="https://signpath.org">SignPath Foundation</a> para firmar los ejecutables de Windows. <em>Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>.</em>
+      Solo se firman los binarios compilados por GitHub Actions a partir del código público, y cada firma se aprueba manualmente. Mientras la firma no esté activa en una versión, Windows SmartScreen o macOS Gatekeeper pueden avisarte (macOS no está firmado ni notarizado). Comprueba el hash con <code>SHA256SUMS.txt</code> o compila desde el código fuente. Consulta la <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/CODE_SIGNING_POLICY.md">política de firma de código</a>.
+    </div>
+  </div>
+</section>
+
+<section id="privacidad">
+  <div class="wrap">
+    <h2>Privacidad: nada sale de tu equipo</h2>
+    <p class="sub">Ni fotos, ni vídeos, ni metadatos, ni coordenadas se envían a ningún servicio.</p>
+    <div class="grid">
+      <div class="card"><h3>Geocodificación local</h3><p>Usa una base de datos local (GeoNames), sin consultar servidores.</p></div>
+      <div class="card"><h3>Miniaturas en tu disco</h3><p>Se guardan solo en <code>_Manifest/thumbs</code> de tu destino.</p></div>
+      <div class="card"><h3>Lectura mínima</h3><p>De la base de Fotos del iPhone solo se leen álbumes y la marca de favorito; la copia temporal se borra.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="band">
+  <div class="wrap">
+    <h2>Preguntas frecuentes</h2>
+    <p class="sub">&nbsp;</p>
+    <details><summary>¿Puedo borrar fotos del iPhone después de respaldar?</summary><p>La herramienta genera una lista de lo que <strong>no</strong> debes borrar. Lee la <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/GUIA_LIBERAR_ESPACIO.md">guía para liberar espacio</a> antes de hacerlo.</p></details>
+    <details><summary>¿Se respaldan los originales de fotos editadas?</summary><p>No del todo: los originales sin editar viven en <code>/PhotoData/Mutations</code> y no se respaldan. Se copia la versión visible en <code>/DCIM</code> más su <code>.AAE</code>; el informe los marca como «no a salvo».</p></details>
+    <details><summary>El iPhone deja de responder tras miles de archivos</summary><p>El servicio de archivos (AFC) puede responder <code>NO_RESOURCES</code> y bloquearse hasta reconectar o reiniciar el teléfono. La herramienta lo detecta, detiene la sesión de forma limpia y se puede reanudar. El escaneo rápido y la caché de metadatos lo reducen.</p></details>
+    <details><summary>¿Qué velocidad puedo esperar?</summary><p>Unos 30 MB/s medidos por USB; depende del iPhone, no del disco.</p></details>
+    <details><summary>¿Reorganiza mi biblioteca existente?</summary><p>No. Solo lo nuevo usa la estructura con álbumes. Tampoco se reconocen álbumes si Apple cambia el esquema interno en una versión de iOS; en ese caso continúa sin álbumes y te avisa.</p></details>
+    <details><summary>¿Es de pago?</summary><p>No. Es gratuito y de código abierto (GPL-3.0-or-later). Si te resulta útil puedes hacer una aportación voluntaria.</p></details>
+  </div>
+</section>
+
+<section id="apoyo">
+  <div class="wrap" style="text-align:center">
+    <h2>Apoyar el proyecto</h2>
+    <p class="sub" style="margin-inline:auto">Es gratis y seguirá siéndolo. Si te ahorró tiempo o te dio tranquilidad, un café ayuda a mantenerlo.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://ko-fi.com/joscarper">☕ Invitar un café en Ko-fi</a>
+      <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync/issues">Reportar un problema</a>
+      <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync">⭐ Dar una estrella</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© Jose Carlos Perez · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/LICENSE">GPL-3.0-or-later</a> · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/THIRD_PARTY.md">Avisos de terceros</a> · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/CODE_SIGNING_POLICY.md">Política de firma</a></p>
+    <p>Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>.</p>
+    <p>Datos geográficos © <a href="https://www.geonames.org">GeoNames</a> (CC-BY 4.0). Proyecto independiente, no afiliado a Apple. iPhone es marca de Apple Inc.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('theme');
+  try{var t=localStorage.getItem('theme');if(t)root.setAttribute('data-theme',t)}catch(e){}
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')?root.getAttribute('data-theme')==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+    var n=dark?'light':'dark';root.setAttribute('data-theme',n);
+    try{localStorage.setItem('theme',n)}catch(e){}
+  });
+  var v=document.getElementById('ver');
+  fetch('https://api.github.com/repos/joscarper1/iPhonePhotoSync/releases/latest')
+    .then(function(r){return r.ok?r.json():Promise.reject()})
+    .then(function(j){v.textContent=j.tag_name||'ver releases'})
+    .catch(function(){v.innerHTML='<a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest">ver releases</a>'});
+})();
+</script>
+</body>
+</html>
