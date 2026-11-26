@@ -8,7 +8,7 @@
 AppId={{6F1D2B7A-3C54-4E0B-9B8E-1A5C7D2F9E10}
 AppName=iPhonePhotoSync
 AppVersion={#AppVersion}
-AppPublisher=joscarper1
+AppPublisher=Jose Carlos Perez
 AppPublisherURL=https://github.com/joscarper1/iPhonePhotoSync
 DefaultDirName={autopf}\iPhonePhotoSync
 DefaultGroupName=iPhonePhotoSync

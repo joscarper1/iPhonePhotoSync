@@ -54,4 +54,5 @@ exe = EXE(
 coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name="iphonephotosync")
 if sys.platform == "darwin":
     app = BUNDLE(coll, name="iPhonePhotoSync.app", bundle_identifier="io.github.joscarper1.iphonephotosync",
-                 info_plist={"NSHighResolutionCapable": True, "CFBundleShortVersionString": "0.1.0"})
+                 info_plist={"NSHighResolutionCapable": True, "CFBundleShortVersionString": "0.1.0",
+                            "NSHumanReadableCopyright": "Copyright (C) Jose Carlos Perez. GPL-3.0-or-later"})

@@ -94,7 +94,7 @@ leen los álbumes y la marca de favorito, y la copia temporal se borra.
 
 ## Licencia
 
-**GPL-3.0-or-later** (ver [LICENSE](LICENSE)). Es la licencia que exige la dependencia
+Copyright © Jose Carlos Perez. **GPL-3.0-or-later** (ver [LICENSE](LICENSE)). Es la licencia que exige la dependencia
 [pymobiledevice3](https://github.com/doronz88/pymobiledevice3) (GPL-3.0). Avisos de otras bibliotecas y datos
 (GeoNames CC-BY 4.0, ExifTool, Qt/PySide6, FFmpeg, libheif…) en [docs/THIRD_PARTY.md](docs/THIRD_PARTY.md).
 
