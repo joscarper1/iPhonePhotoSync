@@ -6,6 +6,9 @@ no recoge ni guarda datos de donantes y no usa rastreadores.
 
 ## Configurar los enlaces reales
 
+Estado actual: solo **Ko-fi** (`https://ko-fi.com/joscarper`) está activo; GitHub Sponsors está desactivado hasta que
+se configure su URL.
+
 Edita `src/iphonephotosync/support_config.py`:
 
 ```python

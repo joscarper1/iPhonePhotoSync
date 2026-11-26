@@ -82,9 +82,11 @@ def test_reuse_with_other_project_only_changes_config():
     assert urls(build_model(other)) == [("koFi", "one_time", "https://ko-fi.com/bob")]
 
 
-def test_app_default_config_ships_without_personal_urls():
+def test_app_config_offers_only_configured_kofi():
     from iphonephotosync.support_config import SUPPORT
-    assert not build_model(SupportConfig.from_dict(SUPPORT)).available      # hasta que se configure una URL real
+    m = build_model(SupportConfig.from_dict(SUPPORT))
+    assert m.available and {l.provider.id for l in m.links} == {"koFi"}
+    assert {l.url for l in m.links} == {"https://ko-fi.com/joscarper"}
 
 
 # ------------------------------------------------------------------------------------------------ interfaz
@@ -156,14 +158,18 @@ def test_menu_installed_only_when_available(qapp):
     assert a is not None and a.text() == "Apoyar este proyecto" and len(w.menuBar().actions()) == 1
 
 
-def test_main_window_default_has_no_menu_and_configured_has(qapp, tmp_path):
+def test_main_window_menu_follows_config(qapp, tmp_path):
     from iphonephotosync.app.workflow import UserSettings, Workflow
     from iphonephotosync.ui.main_window import MainWindow
     s = UserSettings(dest=str(tmp_path), use_gps=False, workers=1)
     (tmp_path / "iphone/DCIM").mkdir(parents=True)
     w = MainWindow(Workflow(s, simulate=tmp_path / "iphone"), s, simulated=True, save_settings=False)
-    assert w.support_action is None and w.menuBar().actions() == []
+    assert w.support_action is not None                              # la configuración de la app trae Ko-fi
     w.wf.disconnect()
+    w0 = MainWindow(Workflow(s, simulate=tmp_path / "iphone"), s, simulated=True, save_settings=False,
+                    support=SupportConfig.from_dict({"enabled": False}))
+    assert w0.support_action is None and w0.menuBar().actions() == []
+    w0.wf.disconnect()
     w2 = MainWindow(Workflow(s, simulate=tmp_path / "iphone"), s, simulated=True, save_settings=False, support=cfg())
     assert w2.support_action is not None
     w2.wf.disconnect()
