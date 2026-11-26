@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>iPhonePhotoSync — Respalda las fotos de tu iPhone por USB</title>
-<meta name="description" content="Copia las fotos y vídeos originales de tu iPhone a tu disco por USB, sin tocar el teléfono, con verificación SHA-256 e incremental. Gratis, de código abierto y 100% local.">
+<title>iPhonePhotoSync — Back up your iPhone photos over USB</title>
+<meta name="description" content="Copy the original photos and videos from your iPhone to your own disk over USB, without touching the phone, with SHA-256 verification and incremental backups. Free, open source and 100% local.">
 <link rel="canonical" href="https://joscarper1.github.io/iPhonePhotoSync/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="iPhonePhotoSync — Respalda las fotos de tu iPhone por USB">
-<meta property="og:description" content="Originales sin modificar, verificación SHA-256, copia incremental. Gratis, código abierto y 100% local.">
+<meta property="og:title" content="iPhonePhotoSync — Back up your iPhone photos over USB">
+<meta property="og:description" content="Untouched originals, SHA-256 verification, incremental backups. Free, open source and 100% local.">
 <meta property="og:url" content="https://joscarper1.github.io/iPhonePhotoSync/">
 <meta name="theme-color" content="#0b1220">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Crect x='21' y='10' width='22' height='44' rx='5' fill='none' stroke='white' stroke-width='4'/%3E%3Cpath d='M32 24v14m-6-6 6 6 6-6' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -81,6 +81,10 @@ details p{color:var(--muted);margin:10px 0 0}
 .band{background:var(--surface);border-block:1px solid var(--line)}
 footer{padding:40px 0;color:var(--muted);font-size:.9rem;text-align:center;border-top:1px solid var(--line)}
 footer a{color:var(--muted)}
+
+.nav button{min-width:40px}
+.split>div{min-width:0}
+@media(max-width:700px){table,thead,tbody,tr,th,td{display:block}thead{display:none}tr{border-bottom:1px solid var(--line);padding:8px 0}td{border:0;padding:6px 16px}}
 </style>
 </head>
 <body>
@@ -91,140 +95,141 @@ footer a{color:var(--muted)}
       iPhonePhotoSync
     </a>
     <nav>
-      <a class="hide-sm" href="#funciones">Funciones</a>
-      <a class="hide-sm" href="#descargas">Descargas</a>
-      <a class="hide-sm" href="#faq">Preguntas</a>
+      <a class="hide-sm" href="#features" data-i18n="nav_features">Features</a>
+      <a class="hide-sm" href="#downloads" data-i18n="nav_downloads">Downloads</a>
+      <a class="hide-sm" href="#faq" data-i18n="nav_faq">FAQ</a>
       <a href="https://github.com/joscarper1/iPhonePhotoSync">GitHub</a>
-      <button id="theme" type="button" aria-label="Cambiar tema" title="Cambiar tema">◐</button>
+      <button id="lang" type="button" aria-label="Language / Idioma" title="Language / Idioma">ES</button>
+      <button id="theme" type="button" aria-label="Toggle theme" title="Toggle theme">◐</button>
     </nav>
   </div>
 </header>
 
 <main id="top">
 <div class="wrap hero">
-  <span class="badge">Gratis · Código abierto · 100 % local</span>
-  <h1>Respalda las fotos de tu iPhone en tu propio disco</h1>
-  <p class="lead">Copia <strong>fotos y vídeos originales</strong> por USB, <strong>sin modificar nada en el teléfono</strong>, con verificación SHA-256 y de forma incremental. Sin nube, sin cuentas, sin suscripciones.</p>
+  <span class="badge" data-i18n="badge">Free · Open source · 100% local</span>
+  <h1 data-i18n="h1">Back up your iPhone photos to your own disk</h1>
+  <p class="lead" data-i18n="lead">Copy <strong>original photos and videos</strong> over USB, <strong>without modifying anything on the phone</strong>, with SHA-256 verification and incremental backups. No cloud, no accounts, no subscriptions.</p>
   <div class="cta">
-    <a class="btn primary" href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-setup.exe">⬇ Descargar para Windows</a>
-    <a class="btn" href="#descargas">macOS y Linux</a>
-    <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync">Ver código</a>
+    <a class="btn primary" href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-setup.exe" data-i18n="cta_win">⬇ Download for Windows</a>
+    <a class="btn" href="#downloads" data-i18n="cta_other">macOS and Linux</a>
+    <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync" data-i18n="cta_code">View source</a>
   </div>
-  <p class="meta">Última versión: <strong id="ver">…</strong> · GPL-3.0-or-later · Windows 10/11 verificado con iPhone real</p>
+  <p class="meta"><span data-i18n="meta_ver">Latest version:</span> <strong id="ver">…</strong> · <span data-i18n="meta_rest">GPL-3.0-or-later · Windows 10/11 verified with a real iPhone</span></p>
 </div>
 
-<section id="funciones" class="band">
+<section id="features" class="band">
   <div class="wrap">
-    <h2>Qué hace</h2>
-    <p class="sub">Pensada para quien quiere tener sus recuerdos a salvo y poder liberar espacio en el iPhone con confianza.</p>
+    <h2 data-i18n="f_title">What it does</h2>
+    <p class="sub" data-i18n="f_sub">Made for people who want their memories safe and the confidence to free up space on their iPhone.</p>
     <div class="grid">
-      <div class="card"><div class="ico">🔒</div><h3>Solo lectura</h3><p>Lee <code>/DCIM</code> por USB. Nunca escribe, mueve ni borra nada en el iPhone. No recomprime ni convierte (HEIC, JPEG, PNG, MOV, MP4, Live Photos y <code>.AAE</code>).</p></div>
-      <div class="card"><div class="ico">✅</div><h3>Verificación SHA-256</h3><p>Copia atómica (temporal → renombrado), comprobación de integridad y <strong>nunca sobrescribe</strong> un archivo existente.</p></div>
-      <div class="card"><div class="ico">🔁</div><h3>Incremental y reanudable</h3><p>Detecta qué falta respaldar comparando con tu copia anterior y tu biblioteca. Si se corta, continúa sin repetir lo ya copiado.</p></div>
-      <div class="card"><div class="ico">🗂️</div><h3>Organización automática</h3><p>Álbum › Año › Mes › Lugar, usando fecha de captura, GPS (geocodificación <strong>sin Internet</strong>) y los álbumes del iPhone.</p></div>
-      <div class="card"><div class="ico">🖼️</div><h3>Galería de miniaturas</h3><p>Revisa lo pendiente y elige qué respaldar antes de copiar.</p></div>
-      <div class="card"><div class="ico">🧾</div><h3>Informe claro</h3><p>Dice qué se copió, qué no y por qué, y genera la lista de lo que <strong>no</strong> debes borrar del iPhone.</p></div>
+      <div class="card"><div class="ico">🔒</div><h3 data-i18n="f1_t">Read-only</h3><p data-i18n="f1_p">Reads <code>/DCIM</code> over USB. It never writes, moves or deletes anything on the iPhone. No recompression or conversion (HEIC, JPEG, PNG, MOV, MP4, Live Photos and <code>.AAE</code>).</p></div>
+      <div class="card"><div class="ico">✅</div><h3 data-i18n="f2_t">SHA-256 verification</h3><p data-i18n="f2_p">Atomic copy (temp file → rename), integrity check, and it <strong>never overwrites</strong> an existing file.</p></div>
+      <div class="card"><div class="ico">🔁</div><h3 data-i18n="f3_t">Incremental and resumable</h3><p data-i18n="f3_p">Detects what is still missing by comparing with your previous backup and existing library. If interrupted, it continues without repeating what was already copied.</p></div>
+      <div class="card"><div class="ico">🗂️</div><h3 data-i18n="f4_t">Automatic organization</h3><p data-i18n="f4_p">Album › Year › Month › Place, using capture date, GPS (geocoding <strong>without Internet</strong>) and your iPhone albums.</p></div>
+      <div class="card"><div class="ico">🖼️</div><h3 data-i18n="f5_t">Thumbnail gallery</h3><p data-i18n="f5_p">Review what is pending and choose what to back up before copying.</p></div>
+      <div class="card"><div class="ico">🧾</div><h3 data-i18n="f6_t">Clear report</h3><p data-i18n="f6_p">Tells you what was copied, what wasn't and why, and generates the list of what you should <strong>not</strong> delete from the iPhone.</p></div>
     </div>
   </div>
 </section>
 
-<section id="uso">
+<section id="usage">
   <div class="wrap">
-    <h2>Cómo se usa</h2>
-    <p class="sub">Tres pasos desde la interfaz gráfica.</p>
+    <h2 data-i18n="u_title">How to use it</h2>
+    <p class="sub" data-i18n="u_sub">Three steps from the graphical interface.</p>
     <ol class="steps">
-      <li><strong>Conecta y confía.</strong> Conecta el iPhone por USB, desbloquéalo y pulsa <em>Confiar</em>.</li>
-      <li><strong>Escanea.</strong> Elige el disco de destino (la carpeta que <em>contiene</em> <code>iPhone_Photos</code>) y pulsa <em>Escanear iPhone</em>.</li>
-      <li><strong>Respalda.</strong> Revisa lo pendiente, marca lo que quieras y pulsa <em>Respaldar</em>.</li>
+      <li data-i18n="u1"><strong>Connect and trust.</strong> Plug in the iPhone over USB, unlock it and tap <em>Trust</em>.</li>
+      <li data-i18n="u2"><strong>Scan.</strong> Choose the destination disk (the folder that <em>contains</em> <code>iPhone_Photos</code>) and click <em>Scan iPhone</em>.</li>
+      <li data-i18n="u3"><strong>Back up.</strong> Review what is pending, tick what you want and click <em>Back up</em>.</li>
     </ol>
     <div class="split" style="margin-top:28px">
       <div>
-        <h3>También por línea de comandos</h3>
+        <h3 data-i18n="u_cli">Also from the command line</h3>
 <pre>python -m pip install -e ".[dev]"
 python tools/fetch_exiftool.py
-iphonephotosync-ui          # interfaz
+iphonephotosync-ui          # GUI
 iphonephotosync --help      # scan, preview, backup,
                             # verify, status,
                             # deletion-report</pre>
       </div>
       <div>
-        <h3>Así queda tu biblioteca</h3>
-<pre>iPhone_Photos/
-├─ Vacaciones 2025/
-│  └─ 2025/07/Roma/IMG_0412.HEIC
+        <h3 data-i18n="u_tree">How your library ends up</h3>
+<pre data-i18n="u_tree_pre">iPhone_Photos/
+├─ Vacation 2025/
+│  └─ 2025/07/Rome/IMG_0412.HEIC
 ├─ 2025/
 │  └─ 08/Guadalajara/IMG_0530.JPG
-└─ Fecha desconocida/</pre>
+└─ Unknown date/</pre>
       </div>
     </div>
   </div>
 </section>
 
-<section id="descargas" class="band">
+<section id="downloads" class="band">
   <div class="wrap">
-    <h2>Descargas</h2>
-    <p class="sub">Enlaces directos a la <strong>última versión</strong>. Cada release incluye <code>SHA256SUMS.txt</code> para comprobar la integridad.</p>
+    <h2 data-i18n="d_title">Downloads</h2>
+    <p class="sub" data-i18n="d_sub">Direct links to the <strong>latest version</strong>. Every release includes <code>SHA256SUMS.txt</code> to verify integrity.</p>
     <table>
-      <thead><tr><th>Sistema</th><th>Descarga</th><th>Requisitos</th></tr></thead>
+      <thead><tr><th data-i18n="th_os">System</th><th data-i18n="th_dl">Download</th><th data-i18n="th_req">Requirements</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>Windows 10/11 (x64)</strong><span class="tag ok">Verificado</span></td>
-          <td><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-setup.exe">Instalador (.exe)</a><br><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-windows-x64.zip">Portátil (.zip)</a></td>
-          <td><strong>Apple Devices</strong> (Microsoft Store) o iTunes, para el controlador USB.</td>
+          <td><strong>Windows 10/11 (x64)</strong><span class="tag ok" data-i18n="tag_ok">Verified</span></td>
+          <td><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-setup.exe" data-i18n="d_win1">Installer (.exe)</a><br><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-windows-x64.zip" data-i18n="d_win2">Portable (.zip)</a></td>
+          <td data-i18n="d_win_req"><strong>Apple Devices</strong> (Microsoft Store) or iTunes, for the USB driver.</td>
         </tr>
         <tr>
-          <td><strong>macOS (Apple Silicon)</strong><span class="tag exp">Experimental</span></td>
+          <td><strong>macOS (Apple Silicon)</strong><span class="tag exp" data-i18n="tag_exp">Experimental</span></td>
           <td><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-macos-arm64.zip">.zip</a></td>
-          <td>Primera vez: clic derecho → <em>Abrir</em> (no está firmada ni notarizada).</td>
+          <td data-i18n="d_mac_req">First time: right-click → <em>Open</em> (not signed or notarized).</td>
         </tr>
         <tr>
-          <td><strong>Linux (x64)</strong><span class="tag exp">Experimental</span></td>
+          <td><strong>Linux (x64)</strong><span class="tag exp" data-i18n="tag_exp2">Experimental</span></td>
           <td><a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest/download/iphonephotosync-linux-x64.tar.gz">.tar.gz</a></td>
-          <td><code>usbmuxd</code> en marcha y <code>perl</code> (para ExifTool).</td>
+          <td data-i18n="d_lin_req"><code>usbmuxd</code> running and <code>perl</code> (for ExifTool).</td>
         </tr>
       </tbody>
     </table>
-    <p style="margin-top:16px;color:var(--muted)">Todas las versiones: <a href="https://github.com/joscarper1/iPhonePhotoSync/releases">github.com/joscarper1/iPhonePhotoSync/releases</a></p>
-    <div class="notice" id="signing" style="margin-top:16px">
-      <strong>Firma de código.</strong> Este proyecto usa la <a href="https://signpath.org">SignPath Foundation</a> para firmar los ejecutables de Windows. <em>Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>.</em>
-      Solo se firman los binarios compilados por GitHub Actions a partir del código público, y cada firma se aprueba manualmente. Mientras la firma no esté activa en una versión, Windows SmartScreen o macOS Gatekeeper pueden avisarte (macOS no está firmado ni notarizado). Comprueba el hash con <code>SHA256SUMS.txt</code> o compila desde el código fuente. Consulta la <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/CODE_SIGNING_POLICY.md">política de firma de código</a>.
+    <p style="margin-top:16px;color:var(--muted)"><span data-i18n="d_all">All versions:</span> <a href="https://github.com/joscarper1/iPhonePhotoSync/releases">github.com/joscarper1/iPhonePhotoSync/releases</a></p>
+    <div class="notice" id="signing" style="margin-top:16px" data-i18n="d_sign">
+      <strong>Code signing.</strong> This project uses the <a href="https://signpath.org">SignPath Foundation</a> for code signing of its Windows executables. <em>Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>.</em>
+      Only binaries built by GitHub Actions from the public source code are signed, and each signature is approved manually. While signing is not active for a given release, Windows SmartScreen or macOS Gatekeeper may warn you (macOS is not signed or notarized). Verify the hash with <code>SHA256SUMS.txt</code> or build from source. See the <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/CODE_SIGNING_POLICY.md">code signing policy</a>.
     </div>
   </div>
 </section>
 
-<section id="privacidad">
+<section id="privacy">
   <div class="wrap">
-    <h2>Privacidad: nada sale de tu equipo</h2>
-    <p class="sub">Ni fotos, ni vídeos, ni metadatos, ni coordenadas se envían a ningún servicio.</p>
+    <h2 data-i18n="p_title">Privacy: nothing leaves your computer</h2>
+    <p class="sub" data-i18n="p_sub">No photos, videos, metadata or coordinates are sent to any service.</p>
     <div class="grid">
-      <div class="card"><h3>Geocodificación local</h3><p>Usa una base de datos local (GeoNames), sin consultar servidores.</p></div>
-      <div class="card"><h3>Miniaturas en tu disco</h3><p>Se guardan solo en <code>_Manifest/thumbs</code> de tu destino.</p></div>
-      <div class="card"><h3>Lectura mínima</h3><p>De la base de Fotos del iPhone solo se leen álbumes y la marca de favorito; la copia temporal se borra.</p></div>
+      <div class="card"><h3 data-i18n="p1_t">Local geocoding</h3><p data-i18n="p1_p">Uses a local database (GeoNames), without querying servers.</p></div>
+      <div class="card"><h3 data-i18n="p2_t">Thumbnails on your disk</h3><p data-i18n="p2_p">Stored only in <code>_Manifest/thumbs</code> at your destination.</p></div>
+      <div class="card"><h3 data-i18n="p3_t">Minimal reading</h3><p data-i18n="p3_p">From the iPhone Photos database only albums and the favorite flag are read; the temporary copy is deleted.</p></div>
     </div>
   </div>
 </section>
 
 <section id="faq" class="band">
   <div class="wrap">
-    <h2>Preguntas frecuentes</h2>
+    <h2 data-i18n="q_title">Frequently asked questions</h2>
     <p class="sub">&nbsp;</p>
-    <details><summary>¿Puedo borrar fotos del iPhone después de respaldar?</summary><p>La herramienta genera una lista de lo que <strong>no</strong> debes borrar. Lee la <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/GUIA_LIBERAR_ESPACIO.md">guía para liberar espacio</a> antes de hacerlo.</p></details>
-    <details><summary>¿Se respaldan los originales de fotos editadas?</summary><p>No del todo: los originales sin editar viven en <code>/PhotoData/Mutations</code> y no se respaldan. Se copia la versión visible en <code>/DCIM</code> más su <code>.AAE</code>; el informe los marca como «no a salvo».</p></details>
-    <details><summary>El iPhone deja de responder tras miles de archivos</summary><p>El servicio de archivos (AFC) puede responder <code>NO_RESOURCES</code> y bloquearse hasta reconectar o reiniciar el teléfono. La herramienta lo detecta, detiene la sesión de forma limpia y se puede reanudar. El escaneo rápido y la caché de metadatos lo reducen.</p></details>
-    <details><summary>¿Qué velocidad puedo esperar?</summary><p>Unos 30 MB/s medidos por USB; depende del iPhone, no del disco.</p></details>
-    <details><summary>¿Reorganiza mi biblioteca existente?</summary><p>No. Solo lo nuevo usa la estructura con álbumes. Tampoco se reconocen álbumes si Apple cambia el esquema interno en una versión de iOS; en ese caso continúa sin álbumes y te avisa.</p></details>
-    <details><summary>¿Es de pago?</summary><p>No. Es gratuito y de código abierto (GPL-3.0-or-later). Si te resulta útil puedes hacer una aportación voluntaria.</p></details>
+    <details><summary data-i18n="q1">Can I delete photos from the iPhone after backing up?</summary><p data-i18n="a1">The tool generates a list of what you should <strong>not</strong> delete. Read the <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/GUIA_LIBERAR_ESPACIO.md">guide to freeing up space</a> (in Spanish) before doing so.</p></details>
+    <details><summary data-i18n="q2">Are the originals of edited photos backed up?</summary><p data-i18n="a2">Not entirely: unedited originals live in <code>/PhotoData/Mutations</code> and are not backed up. The visible version in <code>/DCIM</code> plus its <code>.AAE</code> file is copied; the report marks them as "not safe".</p></details>
+    <details><summary data-i18n="q3">The iPhone stops responding after thousands of files</summary><p data-i18n="a3">The file service (AFC) may answer <code>NO_RESOURCES</code> and lock up until you reconnect or restart the phone. The tool detects it, stops the session cleanly and you can resume. Quick scan and the metadata cache reduce it.</p></details>
+    <details><summary data-i18n="q4">What speed can I expect?</summary><p data-i18n="a4">About 30 MB/s measured over USB; it depends on the iPhone, not on the disk.</p></details>
+    <details><summary data-i18n="q5">Does it reorganize my existing library?</summary><p data-i18n="a5">No. Only new items use the album structure. Albums are also not recognized if Apple changes the internal schema in an iOS version; in that case it continues without albums and warns you.</p></details>
+    <details><summary data-i18n="q6">Is it paid?</summary><p data-i18n="a6">No. It is free and open source (GPL-3.0-or-later). If you find it useful you can make a voluntary contribution.</p></details>
   </div>
 </section>
 
-<section id="apoyo">
+<section id="support">
   <div class="wrap" style="text-align:center">
-    <h2>Apoyar el proyecto</h2>
-    <p class="sub" style="margin-inline:auto">Es gratis y seguirá siéndolo. Si te ahorró tiempo o te dio tranquilidad, un café ayuda a mantenerlo.</p>
+    <h2 data-i18n="s_title">Support the project</h2>
+    <p class="sub" style="margin-inline:auto" data-i18n="s_sub">It is free and will stay free. If it saved you time or gave you peace of mind, a coffee helps keep it going.</p>
     <div class="cta">
-      <a class="btn primary" href="https://ko-fi.com/joscarper">☕ Invitar un café en Ko-fi</a>
-      <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync/issues">Reportar un problema</a>
-      <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync">⭐ Dar una estrella</a>
+      <a class="btn primary" href="https://ko-fi.com/joscarper" data-i18n="s_kofi">☕ Buy me a coffee on Ko-fi</a>
+      <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync/issues" data-i18n="s_issue">Report an issue</a>
+      <a class="btn" href="https://github.com/joscarper1/iPhonePhotoSync" data-i18n="s_star">⭐ Star on GitHub</a>
     </div>
   </div>
 </section>
@@ -232,26 +237,98 @@ iphonephotosync --help      # scan, preview, backup,
 
 <footer>
   <div class="wrap">
-    <p>© Jose Carlos Perez · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/LICENSE">GPL-3.0-or-later</a> · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/THIRD_PARTY.md">Avisos de terceros</a> · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/CODE_SIGNING_POLICY.md">Política de firma</a></p>
+    <p>© Jose Carlos Perez · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/LICENSE">GPL-3.0-or-later</a> · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/THIRD_PARTY.md" data-i18n="ft_third">Third-party notices</a> · <a href="https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/CODE_SIGNING_POLICY.md" data-i18n="ft_sign">Code signing policy</a></p>
     <p>Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>.</p>
-    <p>Datos geográficos © <a href="https://www.geonames.org">GeoNames</a> (CC-BY 4.0). Proyecto independiente, no afiliado a Apple. iPhone es marca de Apple Inc.</p>
+    <p data-i18n="ft_geo">Geographic data © <a href="https://www.geonames.org">GeoNames</a> (CC-BY 4.0). Independent project, not affiliated with Apple. iPhone is a trademark of Apple Inc.</p>
   </div>
 </footer>
 
 <script>
 (function(){
-  var root=document.documentElement,btn=document.getElementById('theme');
+  var ES={
+    title:"iPhonePhotoSync — Respalda las fotos de tu iPhone por USB",
+    desc:"Copia las fotos y vídeos originales de tu iPhone a tu disco por USB, sin tocar el teléfono, con verificación SHA-256 e incremental. Gratis, de código abierto y 100% local.",
+    nav_features:"Funciones", nav_downloads:"Descargas", nav_faq:"Preguntas",
+    badge:"Gratis · Código abierto · 100 % local",
+    h1:"Respalda las fotos de tu iPhone en tu propio disco",
+    lead:"Copia <strong>fotos y vídeos originales</strong> por USB, <strong>sin modificar nada en el teléfono</strong>, con verificación SHA-256 y de forma incremental. Sin nube, sin cuentas, sin suscripciones.",
+    cta_win:"⬇ Descargar para Windows", cta_other:"macOS y Linux", cta_code:"Ver código",
+    meta_ver:"Última versión:", meta_rest:"GPL-3.0-or-later · Windows 10/11 verificado con iPhone real",
+    f_title:"Qué hace", f_sub:"Pensada para quien quiere tener sus recuerdos a salvo y poder liberar espacio en el iPhone con confianza.",
+    f1_t:"Solo lectura", f1_p:"Lee <code>/DCIM</code> por USB. Nunca escribe, mueve ni borra nada en el iPhone. No recomprime ni convierte (HEIC, JPEG, PNG, MOV, MP4, Live Photos y <code>.AAE</code>).",
+    f2_t:"Verificación SHA-256", f2_p:"Copia atómica (temporal → renombrado), comprobación de integridad y <strong>nunca sobrescribe</strong> un archivo existente.",
+    f3_t:"Incremental y reanudable", f3_p:"Detecta qué falta respaldar comparando con tu copia anterior y tu biblioteca. Si se corta, continúa sin repetir lo ya copiado.",
+    f4_t:"Organización automática", f4_p:"Álbum › Año › Mes › Lugar, usando fecha de captura, GPS (geocodificación <strong>sin Internet</strong>) y los álbumes del iPhone.",
+    f5_t:"Galería de miniaturas", f5_p:"Revisa lo pendiente y elige qué respaldar antes de copiar.",
+    f6_t:"Informe claro", f6_p:"Dice qué se copió, qué no y por qué, y genera la lista de lo que <strong>no</strong> debes borrar del iPhone.",
+    u_title:"Cómo se usa", u_sub:"Tres pasos desde la interfaz gráfica.",
+    u1:"<strong>Conecta y confía.</strong> Conecta el iPhone por USB, desbloquéalo y pulsa <em>Confiar</em>.",
+    u2:"<strong>Escanea.</strong> Elige el disco de destino (la carpeta que <em>contiene</em> <code>iPhone_Photos</code>) y pulsa <em>Escanear iPhone</em>.",
+    u3:"<strong>Respalda.</strong> Revisa lo pendiente, marca lo que quieras y pulsa <em>Respaldar</em>.",
+    u_cli:"También por línea de comandos", u_tree:"Así queda tu biblioteca",
+    u_tree_pre:"iPhone_Photos/\n├─ Vacaciones 2025/\n│  └─ 2025/07/Roma/IMG_0412.HEIC\n├─ 2025/\n│  └─ 08/Guadalajara/IMG_0530.JPG\n└─ Fecha desconocida/",
+    d_title:"Descargas", d_sub:"Enlaces directos a la <strong>última versión</strong>. Cada release incluye <code>SHA256SUMS.txt</code> para comprobar la integridad.",
+    th_os:"Sistema", th_dl:"Descarga", th_req:"Requisitos",
+    tag_ok:"Verificado", tag_exp:"Experimental", tag_exp2:"Experimental",
+    d_win1:"Instalador (.exe)", d_win2:"Portátil (.zip)",
+    d_win_req:"<strong>Apple Devices</strong> (Microsoft Store) o iTunes, para el controlador USB.",
+    d_mac_req:"Primera vez: clic derecho → <em>Abrir</em> (no está firmada ni notarizada).",
+    d_lin_req:"<code>usbmuxd</code> en marcha y <code>perl</code> (para ExifTool).",
+    d_all:"Todas las versiones:",
+    d_sign:"<strong>Firma de código.</strong> Este proyecto usa la <a href=\"https://signpath.org\">SignPath Foundation</a> para firmar los ejecutables de Windows. <em>Free code signing provided by <a href=\"https://about.signpath.io\">SignPath.io</a>, certificate by <a href=\"https://signpath.org\">SignPath Foundation</a>.</em> Solo se firman los binarios compilados por GitHub Actions a partir del código público, y cada firma se aprueba manualmente. Mientras la firma no esté activa en una versión, Windows SmartScreen o macOS Gatekeeper pueden avisarte (macOS no está firmado ni notarizado). Comprueba el hash con <code>SHA256SUMS.txt</code> o compila desde el código fuente. Consulta la <a href=\"https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/CODE_SIGNING_POLICY.md\">política de firma de código</a>.",
+    p_title:"Privacidad: nada sale de tu equipo", p_sub:"Ni fotos, ni vídeos, ni metadatos, ni coordenadas se envían a ningún servicio.",
+    p1_t:"Geocodificación local", p1_p:"Usa una base de datos local (GeoNames), sin consultar servidores.",
+    p2_t:"Miniaturas en tu disco", p2_p:"Se guardan solo en <code>_Manifest/thumbs</code> de tu destino.",
+    p3_t:"Lectura mínima", p3_p:"De la base de Fotos del iPhone solo se leen álbumes y la marca de favorito; la copia temporal se borra.",
+    q_title:"Preguntas frecuentes",
+    q1:"¿Puedo borrar fotos del iPhone después de respaldar?", a1:"La herramienta genera una lista de lo que <strong>no</strong> debes borrar. Lee la <a href=\"https://github.com/joscarper1/iPhonePhotoSync/blob/main/docs/GUIA_LIBERAR_ESPACIO.md\">guía para liberar espacio</a> antes de hacerlo.",
+    q2:"¿Se respaldan los originales de fotos editadas?", a2:"No del todo: los originales sin editar viven en <code>/PhotoData/Mutations</code> y no se respaldan. Se copia la versión visible en <code>/DCIM</code> más su <code>.AAE</code>; el informe los marca como «no a salvo».",
+    q3:"El iPhone deja de responder tras miles de archivos", a3:"El servicio de archivos (AFC) puede responder <code>NO_RESOURCES</code> y bloquearse hasta reconectar o reiniciar el teléfono. La herramienta lo detecta, detiene la sesión de forma limpia y se puede reanudar. El escaneo rápido y la caché de metadatos lo reducen.",
+    q4:"¿Qué velocidad puedo esperar?", a4:"Unos 30 MB/s medidos por USB; depende del iPhone, no del disco.",
+    q5:"¿Reorganiza mi biblioteca existente?", a5:"No. Solo lo nuevo usa la estructura con álbumes. Tampoco se reconocen álbumes si Apple cambia el esquema interno en una versión de iOS; en ese caso continúa sin álbumes y te avisa.",
+    q6:"¿Es de pago?", a6:"No. Es gratuito y de código abierto (GPL-3.0-or-later). Si te resulta útil puedes hacer una aportación voluntaria.",
+    s_title:"Apoyar el proyecto", s_sub:"Es gratis y seguirá siéndolo. Si te ahorró tiempo o te dio tranquilidad, un café ayuda a mantenerlo.",
+    s_kofi:"☕ Invitar un café en Ko-fi", s_issue:"Reportar un problema", s_star:"⭐ Dar una estrella",
+    ft_third:"Avisos de terceros", ft_sign:"Política de firma",
+    ft_geo:"Datos geográficos © <a href=\"https://www.geonames.org\">GeoNames</a> (CC-BY 4.0). Proyecto independiente, no afiliado a Apple. iPhone es marca de Apple Inc."
+  };
+  var root=document.documentElement, nodes=document.querySelectorAll('[data-i18n]'), EN={};
+  nodes.forEach(function(n){EN[n.getAttribute('data-i18n')]=n.innerHTML});
+  EN.title=document.title; EN.desc=document.querySelector('meta[name=description]').content;
+  var verHtml=null;
+  function setVer(){var v=document.getElementById('ver');if(v)v.innerHTML=verHtml||'…'}
+  function apply(l){
+    var d=l==='es'?ES:EN;
+    nodes.forEach(function(n){var k=n.getAttribute('data-i18n');if(d[k]!=null)n.innerHTML=d[k]});
+    document.title=d.title; document.querySelector('meta[name=description]').content=d.desc;
+    root.lang=l; document.getElementById('lang').textContent=l==='es'?'EN':'ES';
+    setVer();
+  }
+  function detect(){
+    var q=(location.search.match(/[?&]lang=(en|es)/)||[])[1]; if(q)return q;
+    try{var s=localStorage.getItem('lang');if(s==='en'||s==='es')return s}catch(e){}
+    var langs=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];
+    return /^es/i.test(langs[0])?'es':'en';
+  }
+  var cur=detect();
+  document.getElementById('lang').addEventListener('click',function(){
+    cur=cur==='es'?'en':'es'; try{localStorage.setItem('lang',cur)}catch(e){} apply(cur);
+  });
+
+  var tbtn=document.getElementById('theme');
   try{var t=localStorage.getItem('theme');if(t)root.setAttribute('data-theme',t)}catch(e){}
-  btn.addEventListener('click',function(){
+  tbtn.addEventListener('click',function(){
     var dark=root.getAttribute('data-theme')?root.getAttribute('data-theme')==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
     var n=dark?'light':'dark';root.setAttribute('data-theme',n);
     try{localStorage.setItem('theme',n)}catch(e){}
   });
-  var v=document.getElementById('ver');
+
   fetch('https://api.github.com/repos/joscarper1/iPhonePhotoSync/releases/latest')
     .then(function(r){return r.ok?r.json():Promise.reject()})
-    .then(function(j){v.textContent=j.tag_name||'ver releases'})
-    .catch(function(){v.innerHTML='<a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest">ver releases</a>'});
+    .then(function(j){verHtml=j.tag_name||null;setVer()})
+    .catch(function(){verHtml='<a href="https://github.com/joscarper1/iPhonePhotoSync/releases/latest">releases</a>';setVer()});
+
+  if(cur==='es')apply('es');
 })();
 </script>
 </body>
