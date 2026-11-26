@@ -41,7 +41,7 @@ Cada versión incluye `SHA256SUMS.txt` para comprobar que el archivo no se alter
 
 En el iPhone: desbloquéalo y pulsa **Confiar** cuando conectes el cable.
 
-Los ejecutables **no están firmados** (no hay certificado de pago): Windows SmartScreen o macOS Gatekeeper pueden
+Política de firma: [docs/CODE_SIGNING_POLICY.md](docs/CODE_SIGNING_POLICY.md). Hasta que la firma esté activa, los ejecutables **no están firmados** (no hay certificado de pago): Windows SmartScreen o macOS Gatekeeper pueden
 avisarte. Puedes comprobar la integridad con `SHA256SUMS.txt` de la Release o compilar desde el código fuente.
 
 ## Uso
